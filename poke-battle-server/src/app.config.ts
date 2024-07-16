@@ -1,6 +1,8 @@
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
+import { matchMaker } from "@colyseus/core";
+import cors from "cors";
 
 /**
  * Import your Room files
@@ -16,6 +18,7 @@ export default config({
   },
 
   initializeExpress: (app) => {
+    app.use(cors());
     /**
      * Use @colyseus/playground
      * (It is not recommended to expose this route in a production environment)
