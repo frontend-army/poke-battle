@@ -1,3 +1,4 @@
+import { MapSchema } from "@colyseus/schema";
 import { Room, Client } from "@colyseus/core";
 import {
   Player,
@@ -5,6 +6,7 @@ import {
   PokeBattlePhase,
   PokeBattleState,
 } from "../interfaces/PokeBattle.inferfaces";
+import { POKEMONS } from "../pokemons";
 
 const maxPokemons = 3;
 
@@ -12,51 +14,98 @@ export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
 
   onCreate() {
-    this.setState(new PokeBattleState());
+    const roomState = new PokeBattleState();
+    roomState.phase = PokeBattlePhase.WAITING;
+    this.setState(roomState);
     this.onMessage("action", (client, message) => {
       console.log("action", message);
-
       this.playerAction(client, message);
     });
     console.log("Room Created!");
   }
 
   playerAction(client: Client, data: PokeBattleActions) {
-    const player = this.state.players.get(client.id);
+    const currentPlayer = this.state.players.get(client.id);
     switch (this.state.phase) {
       case PokeBattlePhase.PICK:
         switch (data.type) {
           // { "type": "PICK", "index": 0, "pokemon": 1 }
           case "PICK":
             if (
-              player.confirmed ||
+              currentPlayer.confirmed ||
               data.index < 0 ||
               data.index >= maxPokemons
             ) {
               return false;
             }
             // TODO: Check repeated
-            console.log(player.pokemons);
-
-            player.pokemons.set(data.index.toString(), data.pokemon);
+            currentPlayer.pokemons.push(data.pokemon);
             return;
           // { "type": "CONFIRM" }
           case "CONFIRM":
-            if (player.pokemons.size === maxPokemons) {
-              player.confirmed = true;
+            if (currentPlayer.pokemons.length < maxPokemons) {
+              return false;
             }
 
+            currentPlayer.confirmed = true;
+
+            let allConfirmed = true;
             this.state.players.forEach((player) => {
-              if (!player.confirmed) return;
+              if (!player.confirmed) allConfirmed = false;
             });
 
-            this.state.phase = PokeBattlePhase.GUESS;
+            if (allConfirmed) {
+              this.state.phase = PokeBattlePhase.GUESS;
+            }
             return;
         }
 
       case PokeBattlePhase.GUESS:
         console.log(client.sessionId, "action!");
+        switch (data.type) {
+          // { "type": "GUESS", "pokemon": 1 }
+          case "GUESS":
+            if (currentPlayer.pokemons.at(0) === data.pokemon) {
+              client.send("GUESS_RESULT", "CORRECT");
+              return;
+            }
+            // Todo: guess from rival pokemons
+            const rivalPokemon = POKEMONS.find(p => p.number === currentPlayer.pokemons.at(0))
+            const guessPokemon = POKEMONS.find(p => p.number === data.pokemon);
+            console.log(data.pokemon, currentPlayer.pokemons.at(0));
 
+            // 'CORRECT' | 'INCORRECT'| 'GREATER' | 'SMALLER';
+            const compareNumber = (target: number, guess: number) => {
+              if (target === guess) {
+                return "CORRECT";
+              }
+              return target < guess ? "SMALLER" : "GREATER";
+            }
+            const compareStrict = (target: unknown, guess: unknown) => {
+              return target === guess ? "CORRECT" : "INCORRECT";
+            }
+            const comparePartial = (target: unknown, otherTarget: unknown, guess: unknown) => {
+              if (target === guess) {
+                return "CORRECT";
+              }
+
+              if (otherTarget === guess) {
+                return "PARTIAL";
+              }
+
+              return "INCORRECT";
+            }
+
+            client.send("GUESS_RESULT", {
+              stage: compareNumber(rivalPokemon.stage, guessPokemon.stage),
+              color: compareStrict(rivalPokemon.color, guessPokemon.color),
+              habitat: compareStrict(rivalPokemon.habitat, guessPokemon.habitat),
+              height: compareNumber(rivalPokemon.height, guessPokemon.height),
+              weight: compareNumber(rivalPokemon.weight, guessPokemon.weight),
+              type_1: comparePartial(rivalPokemon.type_1, rivalPokemon.type_2, guessPokemon.type_1),
+              type_2: comparePartial(rivalPokemon.type_2, rivalPokemon.type_1, guessPokemon.type_2),
+            },)
+        }
       default:
         return false;
     }
@@ -64,7 +113,8 @@ export class PokeBattle extends Room<PokeBattleState> {
 
   onJoin(client: Client) {
     console.log(client.sessionId, "joined!");
-    this.state.players.set(client.sessionId, new Player());
+    const player = new Player();
+    this.state.players.set(client.sessionId, player);
 
     if (this.state.players.size === 2) {
       this.state.phase = PokeBattlePhase.PICK;

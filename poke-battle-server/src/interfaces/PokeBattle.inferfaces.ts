@@ -1,4 +1,4 @@
-import { type, Schema, MapSchema } from "@colyseus/schema";
+import { type, Schema, MapSchema, ArraySchema } from "@colyseus/schema";
 
 export enum PokeBattlePhase {
   WAITING = "WAITING",
@@ -12,7 +12,7 @@ export type PokeBattlePickActions =
   | { type: "CONFIRM" };
 
 export type PokeBattleGuessActions =
-  | { type: "GUESS"; pokemonNumber: number } // Guess pokedle style
+  | { type: "GUESS"; pokemon: number } // Guess pokedle style
   | { type: "SWITCH"; pokemonIndex: number } // Switch to another pokemon (slow, 2 times per match)
   | { type: "POKEDEX"; pokemonIndex: number } // Get Pokedex entry, (slow, 1 times per match)
   | { type: "ATTACK" }; // Get weakness / strength by attacking with your current pokemon;
@@ -22,7 +22,7 @@ export type PokeBattleActions = PokeBattleGuessActions | PokeBattlePickActions;
 // TODO: This should be private
 export class Player extends Schema {
   @type("boolean") confirmed = false;
-  @type(["number"]) pokemons = new MapSchema<number>();
+  @type(["number"]) pokemons = new ArraySchema<number>();
 }
 
 export class PokeBattleState extends Schema {
