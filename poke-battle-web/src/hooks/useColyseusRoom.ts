@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import * as Colyseus from "colyseus.js";
 
+const BASE_URL = import.meta.env.PUBLIC_API_URL;
+
 export default function useColyseusRoom() {
   const [roomId, setRoomId] = useState("");
   const [gameState, setGameState] = useState<any>();
@@ -9,9 +11,7 @@ export default function useColyseusRoom() {
   const roomRef = useRef<Colyseus.Room>();
 
   useEffect(() => {
-    console.log("Colyseus");
-
-    clientRef.current = new Colyseus.Client("ws://poke-battle.onrender.com/");
+    clientRef.current = new Colyseus.Client(BASE_URL);
 
     clientRef.current
       .joinOrCreate("poke_battle")
