@@ -2,9 +2,16 @@ import PokemonPicker from "../components/PokemonPicker";
 import useGameRoom from "./useGameRoom";
 
 export default function Game() {
-  const { roomId, pickPokemon, confirmPokemons, guessPokemon, state } =
-    useGameRoom();
-
+  const {
+    roomId,
+    sessionId,
+    pickPokemon,
+    confirmPokemons,
+    guessPokemon,
+    state,
+  } = useGameRoom();
+  console.log(sessionId, state?.players.get(sessionId));
+  const currentPlayer = state?.players.get(sessionId);
   // TODO: handle loading / waiting after actions
   return (
     <main className="card bg-base-100 shadow-xl border border-base-300 container mx-auto my-10 py-40 flex flex-col items-center gap-3">
@@ -17,6 +24,8 @@ export default function Game() {
               key={i}
               label={`Pokemon #${i + 1}`}
               onSelect={(value) => pickPokemon(i, value)}
+              selectedNumber={currentPlayer?.pokemons[i]}
+              disabled={currentPlayer?.confirmed}
             />
           ))}
           <button onClick={confirmPokemons} className="btn btn-primary">

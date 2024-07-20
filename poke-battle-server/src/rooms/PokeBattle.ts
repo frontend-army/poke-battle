@@ -26,6 +26,9 @@ export class PokeBattle extends Room<PokeBattleState> {
 
   playerAction(client: Client, data: PokeBattleActions) {
     const currentPlayer = this.state.players.get(client.id);
+    const rivalPlayer = [...this.state.players.entries()].find(
+      ([id]) => id !== client.id
+    )[1];
     switch (this.state.phase) {
       case PokeBattlePhase.PICK:
         switch (data.type) {
@@ -65,18 +68,18 @@ export class PokeBattle extends Room<PokeBattleState> {
         switch (data.type) {
           // { "type": "GUESS", "pokemon": 1 }
           case "GUESS":
-            if (currentPlayer.pokemons.at(0) === data.pokemon) {
+            if (rivalPlayer.pokemons.at(0) === data.pokemon) {
               client.send("GUESS_RESULT", "CORRECT");
               return;
             }
             // Todo: guess from rival pokemons
             const rivalPokemon = POKEMONS.find(
-              (p) => p.number === currentPlayer.pokemons.at(0)
+              (p) => p.number === rivalPlayer.pokemons.at(0)
             );
             const guessPokemon = POKEMONS.find(
               (p) => p.number === data.pokemon
             );
-            console.log(data.pokemon, currentPlayer.pokemons.at(0));
+            console.log(data.pokemon, rivalPlayer.pokemons.at(0));
 
             // 'CORRECT' | 'INCORRECT'| 'GREATER' | 'SMALLER';
             const compareNumber = (target: number, guess: number) => {

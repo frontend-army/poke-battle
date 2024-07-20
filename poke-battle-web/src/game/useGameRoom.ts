@@ -11,6 +11,7 @@ export type GameRoom = ReturnType<typeof useGameRoom>;
 
 export default function useGameRoom() {
   const [roomId, setRoomId] = useState("");
+  const [sessionId, setSessionId] = useState("");
   const [gameState, setGameState] = useState<PokeBattleState>();
 
   const clientRef = useRef<Colyseus.Client>();
@@ -23,8 +24,8 @@ export default function useGameRoom() {
       .joinOrCreate("poke_battle")
       .then((room) => {
         roomRef.current = room;
-        console.log(room.sessionId, "joined", room.name);
         setRoomId(room.id);
+        setSessionId(room.sessionId);
         room.onStateChange((newState: any) => {
           setGameState({ ...newState });
         });
@@ -44,6 +45,8 @@ export default function useGameRoom() {
   }, []);
 
   const sendAction = (action: PokeBattleActions) => {
+    console.log("sendAction", action);
+
     roomRef.current?.send("action", action);
   };
 
@@ -62,6 +65,7 @@ export default function useGameRoom() {
   return {
     state: gameState,
     roomId,
+    sessionId,
     pickPokemon,
     confirmPokemons,
     guessPokemon,
