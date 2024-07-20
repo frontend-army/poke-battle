@@ -1,3 +1,4 @@
+import { PokeBattlePhase } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import PokemonPicker from "../components/PokemonPicker";
 import useGameRoom from "./useGameRoom";
 
@@ -24,13 +25,17 @@ export default function Game() {
               key={i}
               label={`Pokemon #${i + 1}`}
               onSelect={(value) => pickPokemon(i, value)}
-              selectedNumber={currentPlayer?.pokemons[i]}
+              selectedNumber={currentPlayer?.pokemons.get(i.toString())}
               disabled={currentPlayer?.confirmed}
             />
           ))}
-          <button onClick={confirmPokemons} className="btn btn-primary">
-            Confirm
-          </button>
+          {!currentPlayer?.confirmed ? (
+            <button onClick={confirmPokemons} className="btn btn-primary">
+              Confirm
+            </button>
+          ) : (
+            <p>Waiting for rival...</p>
+          )}
         </>
       )}
       {state?.phase === "GUESS" && (
@@ -43,6 +48,16 @@ export default function Game() {
           <button className="btn btn-primary">Attack</button>
           <button className="btn btn-primary">Switch</button>
         </>
+      )}
+      {state?.phase === PokeBattlePhase.RESULTS && (
+        <p>
+          Winner:{" "}
+          {state?.winner
+            ? state?.winner === sessionId
+              ? "You"
+              : "Rival"
+            : "Unknown"}
+        </p>
       )}
     </main>
   );

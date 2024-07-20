@@ -22,7 +22,7 @@ export type PokeBattleActions = PokeBattleGuessActions | PokeBattlePickActions;
 // TODO: This should be private
 export class Player extends Schema {
   @type("boolean") confirmed = false;
-  @type(["number"]) pokemons = new ArraySchema<number>();
+  @type({ map: "number" }) pokemons = new MapSchema<number>();
 }
 
 export class PokeBattleState extends Schema {

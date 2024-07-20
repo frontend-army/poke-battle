@@ -5,7 +5,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
     stage: 1,
-    color: "green",
+    colors: ["green"],
     habitat: "grassland",
     height: 7,
     weight: 69,
@@ -18,7 +18,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
     stage: 2,
-    color: "green",
+    colors: ["green"],
     habitat: "grassland",
     height: 10,
     weight: 130,
@@ -31,7 +31,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
     stage: 3,
-    color: "green",
+    colors: ["green"],
     habitat: "grassland",
     height: 20,
     weight: 1000,
@@ -44,7 +44,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
     stage: 1,
-    color: "red",
+    colors: ["red"],
     habitat: "mountain",
     height: 6,
     weight: 85,
@@ -57,7 +57,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png",
     stage: 2,
-    color: "red",
+    colors: ["red"],
     habitat: "mountain",
     height: 11,
     weight: 190,
@@ -70,7 +70,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
     stage: 3,
-    color: "red",
+    colors: ["red"],
     habitat: "mountain",
     height: 17,
     weight: 905,
@@ -83,7 +83,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 5,
     weight: 90,
@@ -96,7 +96,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 10,
     weight: 225,
@@ -109,7 +109,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
     stage: 3,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 16,
     weight: 855,
@@ -122,7 +122,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
     stage: 1,
-    color: "green",
+    colors: ["green"],
     habitat: "forest",
     height: 3,
     weight: 29,
@@ -135,7 +135,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png",
     stage: 2,
-    color: "green",
+    colors: ["green"],
     habitat: "forest",
     height: 7,
     weight: 99,
@@ -148,7 +148,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png",
     stage: 3,
-    color: "white",
+    colors: ["white"],
     habitat: "forest",
     height: 11,
     weight: 320,
@@ -161,7 +161,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "forest",
     height: 3,
     weight: 32,
@@ -174,7 +174,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/14.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "forest",
     height: 6,
     weight: 100,
@@ -187,7 +187,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15.png",
     stage: 3,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "forest",
     height: 10,
     weight: 295,
@@ -200,7 +200,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "forest",
     height: 3,
     weight: 18,
@@ -213,7 +213,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "forest",
     height: 11,
     weight: 300,
@@ -226,7 +226,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png",
     stage: 3,
-    color: "brown",
+    colors: ["brown"],
     habitat: "forest",
     height: 15,
     weight: 395,
@@ -239,7 +239,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "grassland",
     height: 3,
     weight: 35,
@@ -252,7 +252,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/20.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 7,
     weight: 185,
@@ -265,7 +265,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/21.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "rough-terrain",
     height: 3,
     weight: 20,
@@ -278,7 +278,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/22.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "rough-terrain",
     height: 12,
     weight: 380,
@@ -291,7 +291,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/23.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "grassland",
     height: 20,
     weight: 69,
@@ -304,7 +304,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/24.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "grassland",
     height: 35,
     weight: 650,
@@ -317,7 +317,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "forest",
     height: 4,
     weight: 60,
@@ -330,7 +330,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "forest",
     height: 8,
     weight: 300,
@@ -343,7 +343,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/27.png",
     stage: 1,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "rough-terrain",
     height: 6,
     weight: 120,
@@ -356,7 +356,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/28.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "rough-terrain",
     height: 10,
     weight: 295,
@@ -369,7 +369,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/29.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "grassland",
     height: 4,
     weight: 70,
@@ -382,7 +382,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/30.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "grassland",
     height: 8,
     weight: 200,
@@ -395,7 +395,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/31.png",
     stage: 3,
-    color: "blue",
+    colors: ["blue"],
     habitat: "grassland",
     height: 13,
     weight: 600,
@@ -408,7 +408,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/32.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "grassland",
     height: 5,
     weight: 90,
@@ -421,7 +421,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/33.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "grassland",
     height: 9,
     weight: 195,
@@ -434,7 +434,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/34.png",
     stage: 3,
-    color: "purple",
+    colors: ["purple"],
     habitat: "grassland",
     height: 14,
     weight: 620,
@@ -447,7 +447,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
     stage: 2,
-    color: "pink",
+    colors: ["pink"],
     habitat: "mountain",
     height: 6,
     weight: 75,
@@ -460,7 +460,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/36.png",
     stage: 2,
-    color: "pink",
+    colors: ["pink"],
     habitat: "mountain",
     height: 13,
     weight: 400,
@@ -473,7 +473,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 6,
     weight: 99,
@@ -486,7 +486,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/38.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "grassland",
     height: 11,
     weight: 199,
@@ -499,7 +499,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png",
     stage: 2,
-    color: "pink",
+    colors: ["pink"],
     habitat: "grassland",
     height: 5,
     weight: 55,
@@ -512,7 +512,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/40.png",
     stage: 2,
-    color: "pink",
+    colors: ["pink"],
     habitat: "grassland",
     height: 10,
     weight: 120,
@@ -525,7 +525,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/41.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "cave",
     height: 8,
     weight: 75,
@@ -538,7 +538,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "cave",
     height: 16,
     weight: 550,
@@ -551,7 +551,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/43.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "grassland",
     height: 5,
     weight: 54,
@@ -564,7 +564,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "grassland",
     height: 8,
     weight: 86,
@@ -577,7 +577,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/45.png",
     stage: 3,
-    color: "red",
+    colors: ["red"],
     habitat: "grassland",
     height: 12,
     weight: 186,
@@ -590,7 +590,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/46.png",
     stage: 1,
-    color: "red",
+    colors: ["red"],
     habitat: "forest",
     height: 3,
     weight: 54,
@@ -603,7 +603,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/47.png",
     stage: 2,
-    color: "red",
+    colors: ["red"],
     habitat: "forest",
     height: 10,
     weight: 295,
@@ -616,7 +616,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/48.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "forest",
     height: 10,
     weight: 300,
@@ -629,7 +629,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/49.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "forest",
     height: 15,
     weight: 125,
@@ -642,7 +642,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "cave",
     height: 2,
     weight: 8,
@@ -655,7 +655,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/51.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "cave",
     height: 7,
     weight: 333,
@@ -668,7 +668,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png",
     stage: 1,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "urban",
     height: 4,
     weight: 42,
@@ -681,7 +681,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "urban",
     height: 10,
     weight: 320,
@@ -694,7 +694,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
     stage: 1,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "waters-edge",
     height: 8,
     weight: 196,
@@ -707,7 +707,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/55.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 17,
     weight: 766,
@@ -720,7 +720,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/56.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "mountain",
     height: 5,
     weight: 280,
@@ -733,7 +733,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/57.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "mountain",
     height: 10,
     weight: 320,
@@ -746,7 +746,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/58.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 7,
     weight: 190,
@@ -759,7 +759,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 19,
     weight: 1550,
@@ -772,7 +772,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 6,
     weight: 124,
@@ -785,7 +785,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/61.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 10,
     weight: 200,
@@ -798,7 +798,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/62.png",
     stage: 3,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 13,
     weight: 540,
@@ -811,7 +811,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/63.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "urban",
     height: 9,
     weight: 195,
@@ -824,7 +824,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/64.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "urban",
     height: 13,
     weight: 565,
@@ -837,7 +837,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png",
     stage: 3,
-    color: "brown",
+    colors: ["brown"],
     habitat: "urban",
     height: 15,
     weight: 480,
@@ -850,7 +850,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/66.png",
     stage: 1,
-    color: "gray",
+    colors: ["gray"],
     habitat: "mountain",
     height: 8,
     weight: 195,
@@ -863,7 +863,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/67.png",
     stage: 2,
-    color: "gray",
+    colors: ["gray"],
     habitat: "mountain",
     height: 15,
     weight: 705,
@@ -876,7 +876,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/68.png",
     stage: 3,
-    color: "gray",
+    colors: ["gray"],
     habitat: "mountain",
     height: 16,
     weight: 1300,
@@ -889,7 +889,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/69.png",
     stage: 1,
-    color: "green",
+    colors: ["green"],
     habitat: "forest",
     height: 7,
     weight: 40,
@@ -902,7 +902,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/70.png",
     stage: 2,
-    color: "green",
+    colors: ["green"],
     habitat: "forest",
     height: 10,
     weight: 64,
@@ -915,7 +915,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/71.png",
     stage: 3,
-    color: "green",
+    colors: ["green"],
     habitat: "forest",
     height: 17,
     weight: 155,
@@ -928,7 +928,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/72.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "sea",
     height: 9,
     weight: 455,
@@ -941,7 +941,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/73.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "sea",
     height: 16,
     weight: 550,
@@ -954,7 +954,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "mountain",
     height: 4,
     weight: 200,
@@ -967,7 +967,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "mountain",
     height: 10,
     weight: 1050,
@@ -980,7 +980,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png",
     stage: 3,
-    color: "brown",
+    colors: ["brown"],
     habitat: "mountain",
     height: 14,
     weight: 3000,
@@ -993,7 +993,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/77.png",
     stage: 1,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "grassland",
     height: 10,
     weight: 300,
@@ -1006,7 +1006,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/78.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "grassland",
     height: 17,
     weight: 950,
@@ -1019,7 +1019,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png",
     stage: 1,
-    color: "pink",
+    colors: ["pink"],
     habitat: "waters-edge",
     height: 12,
     weight: 360,
@@ -1032,7 +1032,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/80.png",
     stage: 2,
-    color: "pink",
+    colors: ["pink"],
     habitat: "waters-edge",
     height: 16,
     weight: 785,
@@ -1045,7 +1045,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/81.png",
     stage: 1,
-    color: "gray",
+    colors: ["gray"],
     habitat: "rough-terrain",
     height: 3,
     weight: 60,
@@ -1058,7 +1058,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/82.png",
     stage: 2,
-    color: "gray",
+    colors: ["gray"],
     habitat: "rough-terrain",
     height: 10,
     weight: 600,
@@ -1071,7 +1071,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/83.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 8,
     weight: 150,
@@ -1084,7 +1084,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/84.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 14,
     weight: 392,
@@ -1097,7 +1097,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/85.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 18,
     weight: 852,
@@ -1110,7 +1110,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png",
     stage: 1,
-    color: "white",
+    colors: ["white"],
     habitat: "sea",
     height: 11,
     weight: 900,
@@ -1123,7 +1123,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/87.png",
     stage: 2,
-    color: "white",
+    colors: ["white"],
     habitat: "sea",
     height: 17,
     weight: 1200,
@@ -1136,7 +1136,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/88.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "urban",
     height: 9,
     weight: 300,
@@ -1149,7 +1149,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/89.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "urban",
     height: 12,
     weight: 300,
@@ -1162,7 +1162,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/90.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "sea",
     height: 3,
     weight: 40,
@@ -1175,7 +1175,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/91.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "sea",
     height: 15,
     weight: 1325,
@@ -1188,7 +1188,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/92.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "cave",
     height: 13,
     weight: 1,
@@ -1201,7 +1201,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/93.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "cave",
     height: 16,
     weight: 1,
@@ -1214,7 +1214,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png",
     stage: 3,
-    color: "purple",
+    colors: ["purple"],
     habitat: "cave",
     height: 15,
     weight: 405,
@@ -1227,7 +1227,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/95.png",
     stage: 1,
-    color: "gray",
+    colors: ["gray"],
     habitat: "cave",
     height: 88,
     weight: 2100,
@@ -1240,7 +1240,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/96.png",
     stage: 1,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "grassland",
     height: 10,
     weight: 324,
@@ -1253,7 +1253,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/97.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "grassland",
     height: 16,
     weight: 756,
@@ -1266,7 +1266,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/98.png",
     stage: 1,
-    color: "red",
+    colors: ["red"],
     habitat: "waters-edge",
     height: 4,
     weight: 65,
@@ -1279,7 +1279,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/99.png",
     stage: 2,
-    color: "red",
+    colors: ["red"],
     habitat: "waters-edge",
     height: 13,
     weight: 600,
@@ -1292,7 +1292,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/100.png",
     stage: 1,
-    color: "red",
+    colors: ["red"],
     habitat: "urban",
     height: 5,
     weight: 104,
@@ -1305,7 +1305,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/101.png",
     stage: 2,
-    color: "red",
+    colors: ["red"],
     habitat: "urban",
     height: 12,
     weight: 666,
@@ -1318,7 +1318,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/102.png",
     stage: 1,
-    color: "pink",
+    colors: ["pink"],
     habitat: "forest",
     height: 4,
     weight: 25,
@@ -1331,7 +1331,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/103.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "forest",
     height: 20,
     weight: 1200,
@@ -1344,7 +1344,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/104.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "mountain",
     height: 4,
     weight: 65,
@@ -1357,7 +1357,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/105.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "mountain",
     height: 10,
     weight: 450,
@@ -1370,7 +1370,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/106.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "urban",
     height: 15,
     weight: 498,
@@ -1383,7 +1383,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/107.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "urban",
     height: 14,
     weight: 502,
@@ -1396,7 +1396,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/108.png",
     stage: 1,
-    color: "pink",
+    colors: ["pink"],
     habitat: "grassland",
     height: 12,
     weight: 655,
@@ -1409,7 +1409,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/109.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "urban",
     height: 6,
     weight: 10,
@@ -1422,7 +1422,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/110.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "urban",
     height: 12,
     weight: 95,
@@ -1435,7 +1435,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/111.png",
     stage: 1,
-    color: "gray",
+    colors: ["gray"],
     habitat: "rough-terrain",
     height: 10,
     weight: 1150,
@@ -1448,7 +1448,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/112.png",
     stage: 2,
-    color: "gray",
+    colors: ["gray"],
     habitat: "rough-terrain",
     height: 19,
     weight: 1200,
@@ -1461,7 +1461,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/113.png",
     stage: 2,
-    color: "pink",
+    colors: ["pink"],
     habitat: "urban",
     height: 11,
     weight: 346,
@@ -1474,7 +1474,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/114.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "grassland",
     height: 10,
     weight: 350,
@@ -1487,7 +1487,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/115.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 22,
     weight: 800,
@@ -1500,7 +1500,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/116.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "sea",
     height: 4,
     weight: 80,
@@ -1513,7 +1513,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/117.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "sea",
     height: 12,
     weight: 250,
@@ -1526,7 +1526,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/118.png",
     stage: 1,
-    color: "red",
+    colors: ["red"],
     habitat: "waters-edge",
     height: 6,
     weight: 150,
@@ -1539,7 +1539,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/119.png",
     stage: 2,
-    color: "red",
+    colors: ["red"],
     habitat: "waters-edge",
     height: 13,
     weight: 390,
@@ -1552,7 +1552,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/120.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "sea",
     height: 8,
     weight: 345,
@@ -1565,7 +1565,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/121.png",
     stage: 2,
-    color: "purple",
+    colors: ["purple"],
     habitat: "sea",
     height: 11,
     weight: 800,
@@ -1578,7 +1578,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/122.png",
     stage: 2,
-    color: "pink",
+    colors: ["pink"],
     habitat: "urban",
     height: 13,
     weight: 545,
@@ -1591,7 +1591,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/123.png",
     stage: 1,
-    color: "green",
+    colors: ["green"],
     habitat: "grassland",
     height: 15,
     weight: 560,
@@ -1604,7 +1604,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/124.png",
     stage: 2,
-    color: "red",
+    colors: ["red"],
     habitat: "urban",
     height: 14,
     weight: 406,
@@ -1617,7 +1617,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/125.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "grassland",
     height: 11,
     weight: 300,
@@ -1630,7 +1630,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/126.png",
     stage: 2,
-    color: "red",
+    colors: ["red"],
     habitat: "mountain",
     height: 13,
     weight: 445,
@@ -1643,7 +1643,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/127.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "forest",
     height: 15,
     weight: 550,
@@ -1656,7 +1656,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/128.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "grassland",
     height: 14,
     weight: 884,
@@ -1669,7 +1669,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png",
     stage: 1,
-    color: "red",
+    colors: ["red"],
     habitat: "waters-edge",
     height: 9,
     weight: 100,
@@ -1682,7 +1682,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 65,
     weight: 2350,
@@ -1695,7 +1695,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "sea",
     height: 25,
     weight: 2200,
@@ -1708,7 +1708,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "urban",
     height: 3,
     weight: 40,
@@ -1721,7 +1721,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "urban",
     height: 3,
     weight: 65,
@@ -1734,7 +1734,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/134.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "urban",
     height: 10,
     weight: 290,
@@ -1747,7 +1747,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/135.png",
     stage: 2,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "urban",
     height: 8,
     weight: 245,
@@ -1760,7 +1760,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/136.png",
     stage: 2,
-    color: "red",
+    colors: ["red"],
     habitat: "urban",
     height: 9,
     weight: 250,
@@ -1773,7 +1773,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/137.png",
     stage: 1,
-    color: "pink",
+    colors: ["pink"],
     habitat: "urban",
     height: 8,
     weight: 365,
@@ -1786,7 +1786,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/138.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "sea",
     height: 4,
     weight: 75,
@@ -1799,7 +1799,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/139.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "sea",
     height: 10,
     weight: 350,
@@ -1812,7 +1812,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/140.png",
     stage: 1,
-    color: "brown",
+    colors: ["brown"],
     habitat: "sea",
     height: 5,
     weight: 115,
@@ -1825,7 +1825,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/141.png",
     stage: 2,
-    color: "brown",
+    colors: ["brown"],
     habitat: "sea",
     height: 13,
     weight: 405,
@@ -1838,7 +1838,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "mountain",
     height: 18,
     weight: 590,
@@ -1851,7 +1851,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png",
     stage: 2,
-    color: "black",
+    colors: ["black"],
     habitat: "mountain",
     height: 21,
     weight: 4600,
@@ -1864,7 +1864,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/144.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "rare",
     height: 17,
     weight: 554,
@@ -1877,7 +1877,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/145.png",
     stage: 1,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "rare",
     height: 16,
     weight: 526,
@@ -1890,7 +1890,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/146.png",
     stage: 1,
-    color: "yellow",
+    colors: ["yellow"],
     habitat: "rare",
     height: 20,
     weight: 600,
@@ -1903,7 +1903,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/147.png",
     stage: 1,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 18,
     weight: 33,
@@ -1916,7 +1916,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png",
     stage: 2,
-    color: "blue",
+    colors: ["blue"],
     habitat: "waters-edge",
     height: 40,
     weight: 165,
@@ -1929,7 +1929,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png",
     stage: 3,
-    color: "brown",
+    colors: ["brown"],
     habitat: "waters-edge",
     height: 22,
     weight: 2100,
@@ -1942,7 +1942,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png",
     stage: 1,
-    color: "purple",
+    colors: ["purple"],
     habitat: "rare",
     height: 20,
     weight: 1220,
@@ -1955,7 +1955,7 @@ export const POKEMONS = [
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png",
     stage: 1,
-    color: "pink",
+    colors: ["pink"],
     habitat: "rare",
     height: 4,
     weight: 40,
@@ -1963,3 +1963,7 @@ export const POKEMONS = [
     type_2: "none",
   },
 ];
+
+export function getPokemonByNumber(number: number) {
+  return POKEMONS.find((p) => p.number === number);
+}

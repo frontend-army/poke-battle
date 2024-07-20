@@ -6,7 +6,8 @@ import {
   PokeBattlePhase,
   PokeBattleState,
 } from "../interfaces/PokeBattle.inferfaces";
-import { POKEMONS } from "../pokemons";
+import { POKEMONS, getPokemonByNumber } from "../pokemons";
+import { compareNumber, comparePartial, compareStrict } from "../utils/compare";
 
 export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
@@ -39,14 +40,30 @@ export class PokeBattle extends Room<PokeBattleState> {
               data.index < 0 ||
               data.index >= this.state.maxPokemons
             ) {
+              client.send("ERROR", "Invalid Pokemon");
               return false;
             }
             // TODO: Check repeated
-            currentPlayer.pokemons.push(data.pokemon);
+
+            if (
+              [...currentPlayer.pokemons.values()].some(
+                (pokemonNumber) => pokemonNumber === data.pokemon
+              )
+            ) {
+              client.send(
+                "ERROR",
+                `You already have an ${
+                  getPokemonByNumber(data.pokemon).name
+                } in your team!`
+              );
+              return false;
+            }
+
+            currentPlayer.pokemons.set(data.index.toString(), data.pokemon);
             return;
           // { "type": "CONFIRM" }
           case "CONFIRM":
-            if (currentPlayer.pokemons.length < this.state.maxPokemons) {
+            if (currentPlayer.pokemons.size < this.state.maxPokemons) {
               return false;
             }
 
@@ -68,48 +85,24 @@ export class PokeBattle extends Room<PokeBattleState> {
         switch (data.type) {
           // { "type": "GUESS", "pokemon": 1 }
           case "GUESS":
-            if (rivalPlayer.pokemons.at(0) === data.pokemon) {
+            if (rivalPlayer.pokemons.get("0") === data.pokemon) {
               client.send("GUESS_RESULT", "CORRECT");
               return;
             }
             // Todo: guess from rival pokemons
-            const rivalPokemon = POKEMONS.find(
-              (p) => p.number === rivalPlayer.pokemons.at(0)
+            const rivalPokemon = getPokemonByNumber(
+              rivalPlayer.pokemons.get("0")
             );
-            const guessPokemon = POKEMONS.find(
-              (p) => p.number === data.pokemon
-            );
-            console.log(data.pokemon, rivalPlayer.pokemons.at(0));
-
-            // 'CORRECT' | 'INCORRECT'| 'GREATER' | 'SMALLER';
-            const compareNumber = (target: number, guess: number) => {
-              if (target === guess) {
-                return "CORRECT";
-              }
-              return target < guess ? "SMALLER" : "GREATER";
-            };
-            const compareStrict = (target: unknown, guess: unknown) => {
-              return target === guess ? "CORRECT" : "INCORRECT";
-            };
-            const comparePartial = (
-              target: unknown,
-              otherTarget: unknown,
-              guess: unknown
-            ) => {
-              if (target === guess) {
-                return "CORRECT";
-              }
-
-              if (otherTarget === guess) {
-                return "PARTIAL";
-              }
-
-              return "INCORRECT";
-            };
+            const guessPokemon = getPokemonByNumber(data.pokemon);
+            console.log(data.pokemon, rivalPlayer.pokemons.get("0"));
 
             client.send("GUESS_RESULT", {
               stage: compareNumber(rivalPokemon.stage, guessPokemon.stage),
-              color: compareStrict(rivalPokemon.color, guessPokemon.color),
+              // TODO: adapt for multiple colors
+              color: compareStrict(
+                rivalPokemon.colors[0],
+                guessPokemon.colors[0]
+              ),
               habitat: compareStrict(
                 rivalPokemon.habitat,
                 guessPokemon.habitat
@@ -146,11 +139,12 @@ export class PokeBattle extends Room<PokeBattleState> {
 
   onLeave(client: Client) {
     console.log(client.sessionId, "left!");
-    // this.state.players.delete(client.sessionId);
-    // let remainingPlayerIds = Array.from(this.state.players.keys());
-    // if (remainingPlayerIds.length > 0) {
-    //   this.state.winner = remainingPlayerIds[0];
-    // }
+    this.state.players.delete(client.sessionId);
+    let remainingPlayerIds = Array.from(this.state.players.keys());
+    this.state.phase = PokeBattlePhase.RESULTS;
+    if (remainingPlayerIds.length > 0) {
+      this.state.winner = remainingPlayerIds[0];
+    }
   }
 
   onDispose() {

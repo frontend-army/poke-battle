@@ -4,6 +4,7 @@ import type {
   PokeBattleState,
   PokeBattleActions,
 } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces.ts";
+import { toast } from "react-toastify";
 
 const BASE_URL = import.meta.env.PUBLIC_API_URL;
 
@@ -29,6 +30,7 @@ export default function useGameRoom() {
         room.onStateChange((newState: any) => {
           setGameState({ ...newState });
         });
+        room.onMessage("ERROR", (message) => toast.error(message));
         room.onMessage("GUESS_RESULT", (message) => {
           console.log(room.sessionId, "received on", room.name, message);
         });
