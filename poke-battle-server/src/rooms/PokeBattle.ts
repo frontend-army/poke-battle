@@ -8,14 +8,14 @@ import {
 } from "../interfaces/PokeBattle.inferfaces";
 import { POKEMONS } from "../pokemons";
 
-const maxPokemons = 3;
-
 export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
 
   onCreate() {
     const roomState = new PokeBattleState();
     roomState.phase = PokeBattlePhase.WAITING;
+    roomState.maxPokemons = 3;
+
     this.setState(roomState);
     this.onMessage("action", (client, message) => {
       console.log("action", message);
@@ -34,7 +34,7 @@ export class PokeBattle extends Room<PokeBattleState> {
             if (
               currentPlayer.confirmed ||
               data.index < 0 ||
-              data.index >= maxPokemons
+              data.index >= this.state.maxPokemons
             ) {
               return false;
             }
@@ -43,7 +43,7 @@ export class PokeBattle extends Room<PokeBattleState> {
             return;
           // { "type": "CONFIRM" }
           case "CONFIRM":
-            if (currentPlayer.pokemons.length < maxPokemons) {
+            if (currentPlayer.pokemons.length < this.state.maxPokemons) {
               return false;
             }
 
@@ -70,8 +70,12 @@ export class PokeBattle extends Room<PokeBattleState> {
               return;
             }
             // Todo: guess from rival pokemons
-            const rivalPokemon = POKEMONS.find(p => p.number === currentPlayer.pokemons.at(0))
-            const guessPokemon = POKEMONS.find(p => p.number === data.pokemon);
+            const rivalPokemon = POKEMONS.find(
+              (p) => p.number === currentPlayer.pokemons.at(0)
+            );
+            const guessPokemon = POKEMONS.find(
+              (p) => p.number === data.pokemon
+            );
             console.log(data.pokemon, currentPlayer.pokemons.at(0));
 
             // 'CORRECT' | 'INCORRECT'| 'GREATER' | 'SMALLER';
@@ -80,11 +84,15 @@ export class PokeBattle extends Room<PokeBattleState> {
                 return "CORRECT";
               }
               return target < guess ? "SMALLER" : "GREATER";
-            }
+            };
             const compareStrict = (target: unknown, guess: unknown) => {
               return target === guess ? "CORRECT" : "INCORRECT";
-            }
-            const comparePartial = (target: unknown, otherTarget: unknown, guess: unknown) => {
+            };
+            const comparePartial = (
+              target: unknown,
+              otherTarget: unknown,
+              guess: unknown
+            ) => {
               if (target === guess) {
                 return "CORRECT";
               }
@@ -94,17 +102,28 @@ export class PokeBattle extends Room<PokeBattleState> {
               }
 
               return "INCORRECT";
-            }
+            };
 
             client.send("GUESS_RESULT", {
               stage: compareNumber(rivalPokemon.stage, guessPokemon.stage),
               color: compareStrict(rivalPokemon.color, guessPokemon.color),
-              habitat: compareStrict(rivalPokemon.habitat, guessPokemon.habitat),
+              habitat: compareStrict(
+                rivalPokemon.habitat,
+                guessPokemon.habitat
+              ),
               height: compareNumber(rivalPokemon.height, guessPokemon.height),
               weight: compareNumber(rivalPokemon.weight, guessPokemon.weight),
-              type_1: comparePartial(rivalPokemon.type_1, rivalPokemon.type_2, guessPokemon.type_1),
-              type_2: comparePartial(rivalPokemon.type_2, rivalPokemon.type_1, guessPokemon.type_2),
-            },)
+              type_1: comparePartial(
+                rivalPokemon.type_1,
+                rivalPokemon.type_2,
+                guessPokemon.type_1
+              ),
+              type_2: comparePartial(
+                rivalPokemon.type_2,
+                rivalPokemon.type_1,
+                guessPokemon.type_2
+              ),
+            });
         }
       default:
         return false;

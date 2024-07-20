@@ -1,11 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import * as Colyseus from "colyseus.js";
+import type {
+  PokeBattleState,
+  PokeBattleActions,
+} from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces.ts";
 
 const BASE_URL = import.meta.env.PUBLIC_API_URL;
 
-export default function useColyseusRoom() {
+export type GameRoom = ReturnType<typeof useGameRoom>;
+
+export default function useGameRoom() {
   const [roomId, setRoomId] = useState("");
-  const [gameState, setGameState] = useState<any>();
+  const [gameState, setGameState] = useState<PokeBattleState>();
 
   const clientRef = useRef<Colyseus.Client>();
   const roomRef = useRef<Colyseus.Room>();
@@ -37,16 +43,20 @@ export default function useColyseusRoom() {
       });
   }, []);
 
-  const pickPokemon = (pokemon: number) => {
-    roomRef.current?.send("action", { type: "PICK", index: 0, pokemon });
+  const sendAction = (action: PokeBattleActions) => {
+    roomRef.current?.send("action", action);
+  };
+
+  const pickPokemon = (index: number, pokemon: number) => {
+    sendAction({ type: "PICK", index, pokemon });
   };
 
   const confirmPokemons = () => {
-    roomRef.current?.send("action", { type: "CONFIRM" });
+    sendAction({ type: "CONFIRM" });
   };
 
   const guessPokemon = (pokemon: number) => {
-    roomRef.current?.send("action", { type: "GUESS", pokemon });
+    sendAction({ type: "GUESS", pokemon });
   };
 
   return {

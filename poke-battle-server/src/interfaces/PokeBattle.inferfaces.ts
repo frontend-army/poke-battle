@@ -29,6 +29,7 @@ export class PokeBattleState extends Schema {
   @type({ map: Player }) players = new MapSchema<Player>();
   @type("string") phase: PokeBattlePhase;
   @type("string") winner: string;
+  @type("number") maxPokemons: number;
 }
 
 export type PokeBattleStateType = typeof PokeBattleState;
