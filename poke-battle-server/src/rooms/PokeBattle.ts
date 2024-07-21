@@ -5,8 +5,9 @@ import {
   PokeBattleActions,
   PokeBattlePhase,
   PokeBattleState,
+  Pokemon,
 } from "../interfaces/PokeBattle.inferfaces";
-import { POKEMONS, getPokemonByNumber } from "../pokemons";
+import { getPokemonByNumber } from "../pokemons";
 import { compareNumber, comparePartial, compareStrict } from "../utils/compare";
 
 export class PokeBattle extends Room<PokeBattleState> {
@@ -27,13 +28,15 @@ export class PokeBattle extends Room<PokeBattleState> {
 
   playerAction(client: Client, data: PokeBattleActions) {
     const currentPlayer = this.state.players.get(client.id);
-    const rivalPlayer = [...this.state.players.entries()].find(
-      ([id]) => id !== client.id
-    )[1];
+    const [rivalSessionId, rivalPlayer] = [
+      ...this.state.players.entries(),
+    ].find(([id]) => id !== client.id);
+    const rivalCurrentPokemon = rivalPlayer.pokemons.get(
+      rivalPlayer.currentPokemon.toString()
+    );
     switch (this.state.phase) {
       case PokeBattlePhase.PICK:
         switch (data.type) {
-          // { "type": "PICK", "index": 0, "pokemon": 1 }
           case "PICK":
             if (
               currentPlayer.confirmed ||
@@ -43,11 +46,9 @@ export class PokeBattle extends Room<PokeBattleState> {
               client.send("ERROR", "Invalid Pokemon");
               return false;
             }
-            // TODO: Check repeated
-
             if (
               [...currentPlayer.pokemons.values()].some(
-                (pokemonNumber) => pokemonNumber === data.pokemon
+                (pokemon) => pokemon.number === data.pokemon
               )
             ) {
               client.send(
@@ -58,10 +59,10 @@ export class PokeBattle extends Room<PokeBattleState> {
               );
               return false;
             }
-
-            currentPlayer.pokemons.set(data.index.toString(), data.pokemon);
+            const newPokemon = new Pokemon();
+            newPokemon.number = data.pokemon;
+            currentPlayer.pokemons.set(data.index.toString(), newPokemon);
             return;
-          // { "type": "CONFIRM" }
           case "CONFIRM":
             if (currentPlayer.pokemons.size < this.state.maxPokemons) {
               return false;
@@ -83,18 +84,35 @@ export class PokeBattle extends Room<PokeBattleState> {
       case PokeBattlePhase.GUESS:
         console.log(client.sessionId, "action!");
         switch (data.type) {
-          // { "type": "GUESS", "pokemon": 1 }
           case "GUESS":
-            if (rivalPlayer.pokemons.get("0") === data.pokemon) {
+            if (rivalCurrentPokemon.number === data.pokemon) {
               client.send("GUESS_RESULT", "CORRECT");
+              rivalCurrentPokemon.guessed = true;
+              rivalPlayer.currentPokemon = parseInt(
+                [...rivalPlayer.pokemons.entries()].find(
+                  ([, p]) => !p.guessed
+                )?.[0] || "-1",
+                10
+              );
+              if (rivalPlayer.currentPokemon === -1) {
+                client.send("MATCH_RESULT", "VICTORY");
+                this.clients
+                  .getById(rivalSessionId)
+                  .send("MATCH_RESULT", "DEFEAT");
+                this.state.phase = PokeBattlePhase.RESULTS;
+                this.state.winner = client.sessionId;
+              }
               return;
             }
-            // Todo: guess from rival pokemons
             const rivalPokemon = getPokemonByNumber(
-              rivalPlayer.pokemons.get("0")
+              rivalPlayer.pokemons.get(rivalPlayer.currentPokemon.toString())
+                .number
             );
             const guessPokemon = getPokemonByNumber(data.pokemon);
-            console.log(data.pokemon, rivalPlayer.pokemons.get("0"));
+            console.log(
+              data.pokemon,
+              rivalPlayer.pokemons.get(rivalPlayer.currentPokemon.toString())
+            );
 
             client.send("GUESS_RESULT", {
               stage: compareNumber(rivalPokemon.stage, guessPokemon.stage),

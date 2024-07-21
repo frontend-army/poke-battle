@@ -19,15 +19,26 @@ export type PokeBattleGuessActions =
 
 export type PokeBattleActions = PokeBattleGuessActions | PokeBattlePickActions;
 
-// TODO: This should be private
+// TODO: This data should be private
+export class Pokemon extends Schema {
+  @type("boolean") guessed = false;
+  @type("number") number: number;
+}
+
 export class Player extends Schema {
   @type("boolean") confirmed = false;
-  @type({ map: "number" }) pokemons = new MapSchema<number>();
+  @type({ map: Pokemon }) pokemons = new MapSchema<Pokemon>();
+  @type("number") currentPokemon = 0;
+}
+
+export class Round extends Schema {
+  @type("boolean") ended = false;
 }
 
 export class PokeBattleState extends Schema {
   @type({ map: Player }) players = new MapSchema<Player>();
   @type("string") phase: PokeBattlePhase;
+  @type({ array: Round }) rounds: ArraySchema<Round>;
   @type("string") winner: string;
   @type("number") maxPokemons: number;
 }

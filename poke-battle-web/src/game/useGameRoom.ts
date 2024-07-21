@@ -28,10 +28,20 @@ export default function useGameRoom() {
         setRoomId(room.id);
         setSessionId(room.sessionId);
         room.onStateChange((newState: any) => {
+          console.log(newState);
+
           setGameState({ ...newState });
         });
         room.onMessage("ERROR", (message) => toast.error(message));
+        room.onMessage("MATCH_RESULT", (message) => {
+          if (message === "VICTORY") {
+            toast.success(message);
+          } else if (message === "DEFEAT") {
+            toast.error(message);
+          }
+        });
         room.onMessage("GUESS_RESULT", (message) => {
+          toast.warning(JSON.stringify(message, null, 2));
           console.log(room.sessionId, "received on", room.name, message);
         });
         room.onError((code, message) => {

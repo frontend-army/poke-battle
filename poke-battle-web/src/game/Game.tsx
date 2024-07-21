@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { PokeBattlePhase } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import PokemonPicker from "../components/PokemonPicker";
 import useGameRoom from "./useGameRoom";
@@ -11,8 +12,9 @@ export default function Game() {
     guessPokemon,
     state,
   } = useGameRoom();
-  console.log(sessionId, state?.players.get(sessionId));
   const currentPlayer = state?.players.get(sessionId);
+  const [currentGuess, setCurrentGuess] = useState<number | undefined>();
+
   // TODO: handle loading / waiting after actions
   return (
     <main className="card bg-base-100 shadow-xl border border-base-300 container mx-auto my-10 py-40 flex flex-col items-center gap-3">
@@ -25,7 +27,7 @@ export default function Game() {
               key={i}
               label={`Pokemon #${i + 1}`}
               onSelect={(value) => pickPokemon(i, value)}
-              selectedNumber={currentPlayer?.pokemons.get(i.toString())}
+              selectedNumber={currentPlayer?.pokemons.get(i.toString())?.number}
               disabled={currentPlayer?.confirmed}
             />
           ))}
@@ -40,8 +42,20 @@ export default function Game() {
       )}
       {state?.phase === "GUESS" && (
         <>
-          <PokemonPicker label="Pick your guess" onSelect={guessPokemon} />
-          <button onClick={() => guessPokemon(29)} className="btn btn-primary">
+          <PokemonPicker
+            label="Pick your guess"
+            selectedNumber={currentGuess}
+            onSelect={setCurrentGuess}
+          />
+          <button
+            onClick={() => {
+              if (currentGuess) {
+                guessPokemon(currentGuess);
+                setCurrentGuess(undefined);
+              }
+            }}
+            className="btn btn-primary"
+          >
             Guess
           </button>
           <button className="btn btn-primary">Pokedex</button>
