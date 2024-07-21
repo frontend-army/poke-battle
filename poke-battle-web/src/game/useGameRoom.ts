@@ -41,7 +41,7 @@ export default function useGameRoom() {
           }
         });
         room.onMessage("GUESS_RESULT", (message) => {
-          toast.warning(JSON.stringify(message, null, 2));
+          toast.warning(JSON.stringify(message, null, 2), { autoClose: false });
           console.log(room.sessionId, "received on", room.name, message);
         });
         room.onError((code, message) => {
