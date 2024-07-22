@@ -17,10 +17,11 @@ export default function PokemonPicker({
   const results = useMemo(
     () =>
       search
-        ? POKEMONS.filter((pokemon) => pokemon.name.startsWith(search)).slice(
-            0,
-            3,
-          )
+        ? POKEMONS.filter((pokemon) =>
+            pokemon.name
+              .toLocaleLowerCase()
+              .startsWith(search.toLocaleLowerCase()),
+          ).slice(0, 3)
         : [],
     [search],
   );
