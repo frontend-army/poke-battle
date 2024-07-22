@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { POKEMONS } from "../../../poke-battle-server/src/pokemons.ts";
+import { POKEMONS } from "../game/pokemons";
 
 export default function PokemonPicker({
   label,
@@ -18,9 +18,9 @@ export default function PokemonPicker({
     () =>
       search
         ? POKEMONS.filter((pokemon) => pokemon.name.startsWith(search)).slice(
-          0,
-          3,
-        )
+            0,
+            3,
+          )
         : [],
     [search],
   );

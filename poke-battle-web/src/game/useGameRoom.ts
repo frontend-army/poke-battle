@@ -3,8 +3,8 @@ import * as Colyseus from "colyseus.js";
 import type {
   PokeBattleState,
   PokeBattleActions,
-  PokeBattleGuess
-} from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces.ts";
+  PokeBattleGuess,
+} from "../interfaces/PokeBattle.inferfaces";
 import { toast } from "react-toastify";
 
 const BASE_URL = import.meta.env.PUBLIC_API_URL;
@@ -15,7 +15,9 @@ export default function useGameRoom() {
   const [roomId, setRoomId] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [gameState, setGameState] = useState<PokeBattleState>();
-  const [guessResults, setGuessResults] = useState<PokeBattleGuess[]>([] as PokeBattleGuess[]);
+  const [guessResults, setGuessResults] = useState<PokeBattleGuess[]>(
+    [] as PokeBattleGuess[],
+  );
 
   const clientRef = useRef<Colyseus.Client>();
   const roomRef = useRef<Colyseus.Room>();

@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { PokeBattlePhase } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import PokemonPicker from "../components/PokemonPicker";
 import useGameRoom from "./useGameRoom";
-import { getPokemonByNumber } from "../../../poke-battle-server/src/pokemons";
 import PokemonBox from "../components/PokemonBox";
 import Guess from "../components/Guess";
+import { getPokemonByNumber } from "./pokemons";
+import { PokeBattlePhase } from "../interfaces/PokeBattle.inferfaces";
 
-export default function GameUI({ gameRoom }: { gameRoom: ReturnType<typeof useGameRoom> }) {
+export default function GameUI({
+  gameRoom,
+}: {
+  gameRoom: ReturnType<typeof useGameRoom>;
+}) {
   const {
     roomId,
     sessionId,
@@ -17,7 +21,9 @@ export default function GameUI({ gameRoom }: { gameRoom: ReturnType<typeof useGa
   } = gameRoom;
   const currentPlayer = state?.players.get(sessionId);
   const myPokemons = [...(currentPlayer?.pokemons.values() || [])];
-  const rivalPlayer = [...(state?.players.entries() || [])].find(([id]) => id !== sessionId)?.[1];
+  const rivalPlayer = [...(state?.players.entries() || [])].find(
+    ([id]) => id !== sessionId,
+  )?.[1];
   const rivalPokemons = [...(rivalPlayer?.pokemons.values() || [])];
 
   const [currentGuess, setCurrentGuess] = useState<number | undefined>();
@@ -54,7 +60,13 @@ export default function GameUI({ gameRoom }: { gameRoom: ReturnType<typeof useGa
           <div className="flex flex-row">
             {rivalPokemons.map((p, i) => {
               const pokemon = getPokemonByNumber(p.number);
-              return <PokemonBox active={i === rivalPlayer?.currentPokemon} index={i} pokemon={p.guessed ? pokemon : undefined} />
+              return (
+                <PokemonBox
+                  active={i === rivalPlayer?.currentPokemon}
+                  index={i}
+                  pokemon={p.guessed ? pokemon : undefined}
+                />
+              );
             })}
           </div>
           <PokemonPicker
@@ -81,7 +93,13 @@ export default function GameUI({ gameRoom }: { gameRoom: ReturnType<typeof useGa
           <div className="flex flex-row">
             {myPokemons.map((p, i) => {
               const pokemon = getPokemonByNumber(p.number);
-              return <PokemonBox index={i} pokemon={pokemon} />
+              return (
+                <PokemonBox
+                  active={currentPlayer?.currentPokemon === i}
+                  index={i}
+                  pokemon={pokemon}
+                />
+              );
             })}
           </div>
         </>
