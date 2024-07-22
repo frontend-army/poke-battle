@@ -3,6 +3,7 @@ import * as Colyseus from "colyseus.js";
 import type {
   PokeBattleState,
   PokeBattleActions,
+  PokeBattleGuess
 } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces.ts";
 import { toast } from "react-toastify";
 
@@ -14,6 +15,7 @@ export default function useGameRoom() {
   const [roomId, setRoomId] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [gameState, setGameState] = useState<PokeBattleState>();
+  const [guessResults, setGuessResults] = useState<PokeBattleGuess[]>([] as PokeBattleGuess[]);
 
   const clientRef = useRef<Colyseus.Client>();
   const roomRef = useRef<Colyseus.Room>();
@@ -42,6 +44,7 @@ export default function useGameRoom() {
         });
         room.onMessage("GUESS_RESULT", (message) => {
           toast.warning(JSON.stringify(message, null, 2), { autoClose: false });
+          setGuessResults([...guessResults, message]);
           console.log(room.sessionId, "received on", room.name, message);
         });
         room.onError((code, message) => {
@@ -81,5 +84,6 @@ export default function useGameRoom() {
     pickPokemon,
     confirmPokemons,
     guessPokemon,
+    guessResults,
   };
 }

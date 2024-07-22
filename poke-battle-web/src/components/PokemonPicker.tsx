@@ -18,9 +18,9 @@ export default function PokemonPicker({
     () =>
       search
         ? POKEMONS.filter((pokemon) => pokemon.name.startsWith(search)).slice(
-            0,
-            3,
-          )
+          0,
+          3,
+        )
         : [],
     [search],
   );

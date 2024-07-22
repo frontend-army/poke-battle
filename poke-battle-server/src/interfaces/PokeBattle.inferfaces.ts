@@ -1,5 +1,17 @@
 import { type, Schema, MapSchema, ArraySchema } from "@colyseus/schema";
 
+export enum GuessAttributes {
+  stage = "STAGE",
+  color = "COLOR",
+  habitat = "HABITAT",
+  height = "HEIGHT",
+  weight = "WEIGHT",
+  type_1 = "TYPE_1",
+  type_2 = " TYPE_2",
+}
+
+export type PokeBattleGuess = Record<GuessAttributes, string>;
+
 export enum PokeBattlePhase {
   WAITING = "WAITING",
   PICK = "PICK",
