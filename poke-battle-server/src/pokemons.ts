@@ -316,7 +316,7 @@ export const POKEMONS = [
     name: "pikachu",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
-    stage: 2,
+    stage: 1,
     colors: ["yellow"],
     habitat: "forest",
     height: 4,
@@ -446,7 +446,7 @@ export const POKEMONS = [
     name: "clefairy",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
-    stage: 2,
+    stage: 1,
     colors: ["pink"],
     habitat: "mountain",
     height: 6,
@@ -498,7 +498,7 @@ export const POKEMONS = [
     name: "jigglypuff",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png",
-    stage: 2,
+    stage: 1,
     colors: ["pink"],
     habitat: "grassland",
     height: 5,
@@ -1369,7 +1369,7 @@ export const POKEMONS = [
     name: "hitmonlee",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/106.png",
-    stage: 2,
+    stage: 1,
     colors: ["brown"],
     habitat: "urban",
     height: 15,
@@ -1382,7 +1382,7 @@ export const POKEMONS = [
     name: "hitmonchan",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/107.png",
-    stage: 2,
+    stage: 1,
     colors: ["brown"],
     habitat: "urban",
     height: 14,
@@ -1460,7 +1460,7 @@ export const POKEMONS = [
     name: "chansey",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/113.png",
-    stage: 2,
+    stage: 1,
     colors: ["pink"],
     habitat: "urban",
     height: 11,
@@ -1577,7 +1577,7 @@ export const POKEMONS = [
     name: "mr-mime",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/122.png",
-    stage: 2,
+    stage: 1,
     colors: ["pink"],
     habitat: "urban",
     height: 13,
@@ -1603,7 +1603,7 @@ export const POKEMONS = [
     name: "jynx",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/124.png",
-    stage: 2,
+    stage: 1,
     colors: ["red"],
     habitat: "urban",
     height: 14,
@@ -1616,7 +1616,7 @@ export const POKEMONS = [
     name: "electabuzz",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/125.png",
-    stage: 2,
+    stage: 1,
     colors: ["yellow"],
     habitat: "grassland",
     height: 11,
@@ -1629,7 +1629,7 @@ export const POKEMONS = [
     name: "magmar",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/126.png",
-    stage: 2,
+    stage: 1,
     colors: ["red"],
     habitat: "mountain",
     height: 13,
@@ -1850,7 +1850,7 @@ export const POKEMONS = [
     name: "snorlax",
     sprite:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png",
-    stage: 2,
+    stage: 1,
     colors: ["black"],
     habitat: "mountain",
     height: 21,
