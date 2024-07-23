@@ -45,8 +45,14 @@ export default function useGameRoom() {
           }
         });
         room.onMessage("GUESS_RESULT", (message) => {
-          setGuessResults((prev) => [...prev, message]);
           console.log(room.sessionId, "received on", room.name, message);
+          if (message === "CORRECT") {
+            toast.success("Correct!", {
+              autoClose: false,
+            });
+            return;
+          }
+          setGuessResults((prev) => [...prev, message]);
         });
         room.onError((code, message) => {
           console.log(room.sessionId, "couldn't join", room.name);
