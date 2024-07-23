@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { POKEMONS } from "../game/pokemons";
+import { POKEMONS } from "../../../poke-battle-server/src/pokemons";
 
 export default function PokemonPicker({
   label,

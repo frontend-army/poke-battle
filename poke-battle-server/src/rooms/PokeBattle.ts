@@ -1,4 +1,3 @@
-import { MapSchema } from "@colyseus/schema";
 import { Room, Client } from "@colyseus/core";
 import {
   Player,

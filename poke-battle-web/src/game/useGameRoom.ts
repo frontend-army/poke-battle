@@ -4,7 +4,7 @@ import type {
   PokeBattleState,
   PokeBattleActions,
   PokeBattleGuess,
-} from "../interfaces/PokeBattle.inferfaces";
+} from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import { toast } from "react-toastify";
 
 const BASE_URL = import.meta.env.PUBLIC_API_URL;

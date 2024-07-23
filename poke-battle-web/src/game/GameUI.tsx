@@ -3,8 +3,7 @@ import PokemonPicker from "../components/PokemonPicker";
 import useGameRoom from "./useGameRoom";
 import PokemonBox from "../components/PokemonBox";
 import Guess from "../components/Guess";
-import { getPokemonByNumber } from "./pokemons";
-import { PokeBattlePhase } from "../interfaces/PokeBattle.inferfaces";
+import { getPokemonByNumber } from "../../../poke-battle-server/src/pokemons";
 
 export default function GameUI({
   gameRoom,
@@ -104,7 +103,7 @@ export default function GameUI({
           </div>
         </>
       )}
-      {state?.phase === PokeBattlePhase.RESULTS && (
+      {state?.phase === "RESULTS" && (
         <p>
           Winner:{" "}
           {state?.winner

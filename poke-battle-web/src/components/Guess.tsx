@@ -1,5 +1,5 @@
 import useGameRoom from "../game/useGameRoom";
-import { GuessAttributes } from "../interfaces/PokeBattle.inferfaces";
+import type { GuessAttributes } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 
 export default function Guess() {
   const { guessResults } = useGameRoom();

@@ -1,4 +1,4 @@
-import type { POKEMONS } from "../game/pokemons";
+import type { POKEMONS } from "../../../poke-battle-server/src/pokemons";
 
 export default function PokemonBox({
   index,
