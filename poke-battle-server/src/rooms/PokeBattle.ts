@@ -58,12 +58,22 @@ export class PokeBattle extends Room<PokeBattleState> {
               );
               return false;
             }
+
+            if (data.pokemon === -1) {
+              currentPlayer.pokemons.delete(data.index.toString());
+              return;
+            }
+
             const newPokemon = new Pokemon();
             newPokemon.number = data.pokemon;
             currentPlayer.pokemons.set(data.index.toString(), newPokemon);
             return;
           case "CONFIRM":
             if (currentPlayer.pokemons.size < this.state.maxPokemons) {
+              client.send(
+                "ERROR",
+                `You must pick ${this.state.maxPokemons} Pokemon`
+              );
               return false;
             }
 
@@ -114,28 +124,35 @@ export class PokeBattle extends Room<PokeBattleState> {
             );
 
             client.send("GUESS_RESULT", {
-              stage: compareNumber(rivalPokemon.stage, guessPokemon.stage),
-              // TODO: adapt for multiple colors
-              color: compareStrict(
-                rivalPokemon.colors[0],
-                guessPokemon.colors[0]
-              ),
-              habitat: compareStrict(
-                rivalPokemon.habitat,
-                guessPokemon.habitat
-              ),
-              height: compareNumber(rivalPokemon.height, guessPokemon.height),
-              weight: compareNumber(rivalPokemon.weight, guessPokemon.weight),
-              type_1: comparePartial(
-                rivalPokemon.type_1,
-                rivalPokemon.type_2,
-                guessPokemon.type_1
-              ),
-              type_2: comparePartial(
-                rivalPokemon.type_2,
-                rivalPokemon.type_1,
-                guessPokemon.type_2
-              ),
+              result: {
+                stage: compareNumber(rivalPokemon.stage, guessPokemon.stage),
+                // TODO: adapt for multiple colors
+                color: compareStrict(
+                  rivalPokemon.colors[0],
+                  guessPokemon.colors[0]
+                ),
+                habitat: compareStrict(
+                  rivalPokemon.habitat,
+                  guessPokemon.habitat
+                ),
+                height: compareNumber(rivalPokemon.height, guessPokemon.height),
+                weight: compareNumber(rivalPokemon.weight, guessPokemon.weight),
+                type_1: comparePartial(
+                  rivalPokemon.type_1,
+                  rivalPokemon.type_2,
+                  guessPokemon.type_1
+                ),
+                type_2: comparePartial(
+                  rivalPokemon.type_2,
+                  rivalPokemon.type_1,
+                  guessPokemon.type_2
+                ),
+              },
+              pokemon: {
+                ...guessPokemon,
+                color: guessPokemon.colors.join(", "),
+              },
+              pokemonIndex: rivalPlayer.currentPokemon,
             });
         }
       default:

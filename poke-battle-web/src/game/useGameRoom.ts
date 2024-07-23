@@ -46,7 +46,7 @@ export default function useGameRoom() {
         });
         room.onMessage("GUESS_RESULT", (message) => {
           toast.warning(JSON.stringify(message, null, 2), { autoClose: false });
-          setGuessResults([...guessResults, message]);
+          setGuessResults((prev) => [...prev, message]);
           console.log(room.sessionId, "received on", room.name, message);
         });
         room.onError((code, message) => {

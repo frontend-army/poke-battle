@@ -15,6 +15,7 @@
     "@astrojs/react": "^3.6.0",
     "@astrojs/tailwind": "^5.1.0",
     "@colyseus/schema": "^2.0.34",
+    "@heroicons/react": "^2.1.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.11.5",

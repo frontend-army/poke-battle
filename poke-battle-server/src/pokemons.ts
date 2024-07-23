@@ -1967,3 +1967,5 @@ export const POKEMONS = [
 export function getPokemonByNumber(number: number) {
   return POKEMONS.find((p) => p.number === number);
 }
+
+export type PokemonData = (typeof POKEMONS)[0];

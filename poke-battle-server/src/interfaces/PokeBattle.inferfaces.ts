@@ -1,4 +1,5 @@
 import { type, Schema, MapSchema, ArraySchema } from "@colyseus/schema";
+import { PokemonData } from "../pokemons";
 
 export enum GuessAttributes {
   stage = "STAGE",
@@ -10,7 +11,11 @@ export enum GuessAttributes {
   type_2 = " TYPE_2",
 }
 
-export type PokeBattleGuess = Record<GuessAttributes, string>;
+export type PokeBattleGuess = {
+  result: Record<GuessAttributes, string>;
+  pokemon: PokemonData;
+  pokemonIndex: number;
+};
 
 export enum PokeBattlePhase {
   WAITING = "WAITING",

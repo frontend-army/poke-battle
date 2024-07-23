@@ -11,7 +11,7 @@ export default function PokemonBox({
 }) {
   return (
     <div
-      className={`card flex join items-center flex-col w-24 ${active ? "border-8 border-double border-amber-500" : ""}`}
+      className={`card flex join items-center flex-col w-24 aspect-square ${active ? "border-8 border-double border-accent" : ""}`}
     >
       <p>#{index + 1}</p>
       {pokemon ? (
