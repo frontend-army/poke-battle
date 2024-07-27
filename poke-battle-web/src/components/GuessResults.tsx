@@ -23,6 +23,7 @@ export default function GuessResults({
       {!!guessResults?.length &&
         guessResults.map((guess, index) => (
           <div key={index} className="flex flex-row gap-3">
+            <p>{guess.pokemon.name}</p>
             {Object.keys(guess.result).map((attr) => (
               <div className="flex flex-col">
                 <p>

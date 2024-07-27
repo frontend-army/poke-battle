@@ -1,5 +1,6 @@
-import { type, Schema, MapSchema, ArraySchema } from "@colyseus/schema";
+import { type, filter, Schema, MapSchema, ArraySchema } from "@colyseus/schema";
 import { PokemonData } from "../pokemons";
+import { Client } from "colyseus";
 
 export enum GuessAttributes {
   stage = "STAGE",
@@ -30,8 +31,8 @@ export type PokeBattlePickActions =
 
 export type PokeBattleGuessActions =
   | { type: "GUESS"; pokemon: number } // Guess pokedle style
-  | { type: "SWITCH"; pokemonIndex: number } // Switch to another pokemon (slow, 2 times per match)
-  | { type: "POKEDEX"; pokemonIndex: number } // Get Pokedex entry, (slow, 1 times per match)
+  | { type: "SWITCH"; pokemon: number } // Switch to another pokemon (slow, 2 times per match)
+  | { type: "POKEDEX" } // Get Pokedex entry, (slow, 1 times per match)
   | { type: "ATTACK" }; // Get weakness / strength by attacking with your current pokemon;
 
 export type PokeBattleActions = PokeBattleGuessActions | PokeBattlePickActions;
@@ -39,7 +40,20 @@ export type PokeBattleActions = PokeBattleGuessActions | PokeBattlePickActions;
 // TODO: This data should be private
 export class Pokemon extends Schema {
   @type("boolean") guessed = false;
-  @type("number") number: number;
+
+  @filter(function (
+    this: Pokemon,
+    client: Client,
+    value: Pokemon["number"],
+    root: PokeBattleState
+  ) {
+    return (
+      this.guessed ||
+      [...root.players.get(client.id).pokemons.values()].includes(this)
+    );
+  })
+  @type("number")
+  number: number;
 }
 
 export class Player extends Schema {
@@ -48,8 +62,19 @@ export class Player extends Schema {
   @type("number") currentPokemon = 0;
 }
 
+export class Action extends Schema {
+  @type("string") type: PokeBattleGuessActions["type"];
+  @type("number") pokemon: number;
+}
+
+export class Result extends Schema {
+  @type("string") type: PokeBattleGuessActions["type"];
+  @type("number") pokemon: number;
+}
+
 export class Round extends Schema {
-  @type("boolean") ended = false;
+  @type({ map: Action }) actions = new MapSchema<Action>();
+  @type({ map: Action }) results = new MapSchema<Result>();
 }
 
 export class PokeBattleState extends Schema {

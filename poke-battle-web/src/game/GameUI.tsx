@@ -81,6 +81,7 @@ export default function GameUI({
               const pokemon = getPokemonByNumber(p.number);
               return (
                 <PokemonBox
+                  key={i}
                   active={i === rivalPlayer?.currentPokemon}
                   index={i}
                   pokemon={p.guessed ? pokemon : undefined}
@@ -120,7 +121,9 @@ export default function GameUI({
               const pokemon = getPokemonByNumber(p.number);
               return (
                 <PokemonBox
+                  key={i}
                   active={currentPlayer?.currentPokemon === i}
+                  grayed={p.guessed}
                   index={i}
                   pokemon={pokemon}
                 />

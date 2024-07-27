@@ -64,7 +64,7 @@ export default function PokemonPicker({
       )}
       {!selectedPokemon && !disabled && (
         <>
-          <label className="input input-bordered flex items-center gap-2">
+          <div className="input input-bordered flex items-center gap-2">
             <input
               type="text"
               className="grow"
@@ -84,7 +84,7 @@ export default function PokemonPicker({
                 clipRule="evenodd"
               />
             </svg>
-          </label>
+          </div>
           <div className={`dropdown ${results?.length ? "dropdown-open" : ""}`}>
             <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow capitalize">
               {results.map((pokemon) => (
@@ -95,7 +95,7 @@ export default function PokemonPicker({
                       setSearch("");
                     }}
                   >
-                    <img width={80} height={80} src={pokemon.sprite} />
+                    <img alt="" width={80} height={80} src={pokemon.sprite} />
                     <p className="capitalize">{pokemon.name}</p>
                   </button>
                 </li>
