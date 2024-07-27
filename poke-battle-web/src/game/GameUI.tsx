@@ -99,11 +99,6 @@ export default function GameUI({
             selectedNumber={currentGuess}
             onSelect={setCurrentGuess}
           />
-          <GuessResults
-            guessResults={guessResults.filter(
-              (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
-            )}
-          />
           {currentGuess && (
             <button
               onClick={() => {
@@ -117,6 +112,12 @@ export default function GameUI({
               Guess
             </button>
           )}
+          <GuessResults
+            guessResults={guessResults.filter(
+              (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
+            )}
+          />
+
           {/* <button className="btn btn-primary">Pokedex</button>
           <button className="btn btn-primary">Attack</button>
           <button className="btn btn-primary">Switch</button> */}
