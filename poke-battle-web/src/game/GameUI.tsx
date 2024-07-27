@@ -39,7 +39,7 @@ export default function GameUI({
 
   // TODO: handle loading / waiting after actions
   return (
-    <main className="card bg-base-100 shadow-xl border border-base-300 relative container mx-auto my-10 py-20 flex flex-col items-center gap-3">
+    <main className="card bg-base-100 shadow-xl border border-base-300 relative container mx-auto my-10 py-10 px-2 flex flex-col items-center gap-3">
       <div className="absolute left-2 top-2 opacity-60">
         <h2>Room: {roomId}</h2>
         <h2>Phase: {state?.phase}</h2>
@@ -59,7 +59,6 @@ export default function GameUI({
               />
             ))}
           </div>
-
           {!currentPlayer?.confirmed ? (
             <div className="flex gap-4">
               <button onClick={pickRandomPokemons} className="btn btn-accent">
@@ -76,6 +75,11 @@ export default function GameUI({
       )}
       {state?.phase === "GUESS" && (
         <>
+          <p className="text-4xl">Score</p>
+          <p className="text-4xl">
+            {rivalPokemons.filter((p) => p.guessed).length} -{" "}
+            {myPokemons.filter((p) => p.guessed).length}
+          </p>
           <p>Rival Pokemons:</p>
           <div className="flex flex-row">
             {rivalPokemons.map((p, i) => {
@@ -133,16 +137,16 @@ export default function GameUI({
           </div>
         </>
       )}
-      {state?.phase === "RESULTS" && (
-        <p>
-          Winner:{" "}
-          {state?.winner
-            ? state?.winner === sessionId
-              ? "You"
-              : "Rival"
-            : "Unknown"}
-        </p>
-      )}
+      {state?.phase === "RESULTS" &&
+        (state?.winner ? (
+          state?.winner === sessionId ? (
+            <p className="font-semibold text-4xl text-success">Victory!</p>
+          ) : (
+            <p className="font-semibold text-4xl text-error">Defeat!</p>
+          )
+        ) : (
+          <p className="font-semibold text-4xl">Draw!</p>
+        ))}
     </main>
   );
 }

@@ -31,7 +31,7 @@ export default function PokemonPicker({
 
   return (
     <div className="flex flex-col gap-4">
-      {label && <p>{label}</p>}
+      {label && <p className="font-bold text-xl">{label}</p>}
       {selectedPokemon && (
         <div className="join items-center gap-4 relative">
           <button
@@ -59,7 +59,9 @@ export default function PokemonPicker({
             height={100}
             src={selectedPokemon.sprite}
           />
-          <p className="capitalize">{selectedPokemon.name}</p>
+          <p className="capitalize font-semibold text-lg">
+            {selectedPokemon.name}
+          </p>
         </div>
       )}
       {!selectedPokemon && !disabled && (
@@ -88,7 +90,7 @@ export default function PokemonPicker({
           <div className={`dropdown ${results?.length ? "dropdown-open" : ""}`}>
             <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow capitalize">
               {results.map((pokemon) => (
-                <li>
+                <li key={pokemon.number}>
                   <button
                     onClick={() => {
                       onSelect(pokemon.number);
