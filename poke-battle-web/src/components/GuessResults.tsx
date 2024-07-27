@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
-import {
+import type {
   GuessAttributes,
-  type PokeBattleGuess,
+  PokeBattleGuess,
 } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import type { PokemonData } from "../../../poke-battle-server/src/pokemons";
 
@@ -59,9 +59,17 @@ export default function GuessResults({
         <thead>
           <tr className="text-center">
             <th>Pokémon</th>
-            {Object.keys(GuessAttributes).map((attr) => (
-              <td className="capitalize" key={attr}>
-                {attr}
+            {[
+              "stage",
+              "color",
+              "habitat",
+              "height",
+              "weight",
+              "type 1",
+              "type 2",
+            ].map((attr) => (
+              <td key={attr}>
+                <p className="capitalize">{attr}</p>
               </td>
             ))}
           </tr>
