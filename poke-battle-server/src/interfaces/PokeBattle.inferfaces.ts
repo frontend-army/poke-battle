@@ -37,14 +37,13 @@ export type PokeBattleGuessActions =
 
 export type PokeBattleActions = PokeBattleGuessActions | PokeBattlePickActions;
 
-// TODO: This data should be private
 export class Pokemon extends Schema {
   @type("boolean") guessed = false;
 
   @filter(function (
     this: Pokemon,
     client: Client,
-    value: Pokemon["number"],
+    _value: Pokemon["number"],
     root: PokeBattleState
   ) {
     return (

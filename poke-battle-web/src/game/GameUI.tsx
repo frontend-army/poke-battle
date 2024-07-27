@@ -39,10 +39,11 @@ export default function GameUI({
 
   // TODO: handle loading / waiting after actions
   return (
-    <main className="card bg-base-100 shadow-xl border border-base-300 container mx-auto my-10 py-40 flex flex-col items-center gap-3">
-      <h2>Room: {roomId}</h2>
-      <h2>Phase: {state?.phase}</h2>
-
+    <main className="card bg-base-100 shadow-xl border border-base-300 relative container mx-auto my-10 py-20 flex flex-col items-center gap-3">
+      <div className="absolute left-2 top-2 opacity-60">
+        <h2>Room: {roomId}</h2>
+        <h2>Phase: {state?.phase}</h2>
+      </div>
       {state?.phase === "PICK" && (
         <>
           <div className="flex flex-col">
