@@ -4,6 +4,7 @@ import useGameRoom from "./useGameRoom";
 import PokemonBox from "../components/PokemonBox";
 import { getPokemonByNumber } from "../../../poke-battle-server/src/pokemons";
 import GuessResults from "../components/GuessResults";
+import GuessResultsCompact from "../components/GuessResultsCompact";
 
 export default function GameUI({
   gameRoom,
@@ -117,7 +118,6 @@ export default function GameUI({
               (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
             )}
           />
-
           {/* <button className="btn btn-primary">Pokedex</button>
           <button className="btn btn-primary">Attack</button>
           <button className="btn btn-primary">Switch</button> */}
@@ -136,6 +136,12 @@ export default function GameUI({
               );
             })}
           </div>
+          {/* TODO: show opponent guesses */}
+          {/* <GuessResultsCompact
+            guessResults={guessResults.filter(
+              (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
+            )}
+          /> */}
         </>
       )}
       {state?.phase === "RESULTS" &&
