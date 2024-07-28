@@ -88,7 +88,7 @@ export default function PokemonPicker({
             </svg>
           </div>
           <div className={`dropdown ${results?.length ? "dropdown-open" : ""}`}>
-            <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow capitalize">
+            <ul className="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow capitalize z-20">
               {results.map((pokemon) => (
                 <li key={pokemon.number}>
                   <button

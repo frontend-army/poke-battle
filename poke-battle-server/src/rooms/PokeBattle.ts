@@ -23,18 +23,12 @@ export class PokeBattle extends Room<PokeBattleState> {
 
     this.setState(roomState);
     this.onMessage("action", (client, message) => {
-      console.log("action from", client.sessionId, message);
       this.playerAction(client, message);
     });
-    console.log("Room Created!");
   }
 
   handlePickAction(client: Client, action: PokeBattlePickActions) {
     const currentPlayer = this.state.players.get(client.sessionId);
-    const [, rivalPlayer] = [...this.state.players.entries()].find(
-      ([id]) => id !== client.sessionId
-    );
-
     switch (action.type) {
       case "PICK":
         if (
@@ -227,7 +221,6 @@ export class PokeBattle extends Room<PokeBattleState> {
   }
 
   onJoin(client: Client) {
-    console.log(client.sessionId, "joined!");
     const player = new Player();
     this.state.players.set(client.sessionId, player);
 
@@ -238,16 +231,11 @@ export class PokeBattle extends Room<PokeBattleState> {
   }
 
   onLeave(client: Client) {
-    console.log(client.sessionId, "left!");
     this.state.players.delete(client.sessionId);
     let remainingPlayerIds = Array.from(this.state.players.keys());
     this.state.phase = PokeBattlePhase.RESULTS;
     if (remainingPlayerIds.length > 0) {
       this.state.winner = remainingPlayerIds[0];
     }
-  }
-
-  onDispose() {
-    console.log("room", this.roomId, "disposing...");
   }
 }

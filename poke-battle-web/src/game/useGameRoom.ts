@@ -32,8 +32,6 @@ export default function useGameRoom() {
         setRoomId(room.id);
         setSessionId(room.sessionId);
         room.onStateChange((newState: any) => {
-          console.log(newState);
-
           setGameState({ ...newState });
         });
         room.onMessage("ERROR", (message) => toast.error(message));
@@ -45,30 +43,25 @@ export default function useGameRoom() {
           }
         });
         room.onMessage("GUESS_RESULT", (message) => {
-          console.log(room.sessionId, "received on", room.name, message);
           if (message === "CORRECT") {
-            toast.success("Correct!", {
-              autoClose: false,
-            });
+            toast.success("Correct!");
             return;
           }
           setGuessResults((prev) => [...prev, message]);
         });
-        room.onError((code, message) => {
-          console.log(room.sessionId, "couldn't join", room.name);
+        room.onError(() => {
+          toast.error(`couldn't join (room: ${room.sessionId})`);
         });
         room.onLeave((code) => {
-          console.log(room.sessionId, "left", room.name);
+          toast.error(`left room left (room: ${room.sessionId})`);
         });
       })
       .catch((e) => {
-        console.log("JOIN ERROR", e);
+        toast.error(`Couldn't join room`);
       });
   }, []);
 
   const sendAction = (action: PokeBattleActions) => {
-    console.log("sendAction", action);
-
     roomRef.current?.send("action", action);
   };
 
@@ -84,11 +77,36 @@ export default function useGameRoom() {
     sendAction({ type: "GUESS", pokemon });
   };
 
+  const currentPlayer = gameState?.players.get(sessionId);
+  const myPokemons = [...(currentPlayer?.pokemons.values() || [])];
+  const [rivalId, rivalPlayer] = [...(gameState?.players.entries() || [])].find(
+    ([id]) => id !== sessionId,
+  ) || ["", undefined];
+  const rivalPokemons = [...(rivalPlayer?.pokemons.values() || [])];
+  const waitingForRivalAction =
+    !!gameState?.rounds[gameState?.currentRound]?.actions.get(sessionId);
+
+  function pickRandomPokemons() {
+    const pokes = [];
+    while (pokes.length < 3) {
+      var r = Math.floor(Math.random() * 151) + 1;
+      if (pokes.indexOf(r) === -1) pokes.push(r);
+    }
+    pokes.forEach((p, i) => pickPokemon(i, p));
+  }
+
   return {
     state: gameState,
+    currentPlayer,
+    myPokemons,
+    rivalId,
+    rivalPlayer,
+    rivalPokemons,
+    waitingForRivalAction,
     roomId,
     sessionId,
     pickPokemon,
+    pickRandomPokemons,
     confirmPokemons,
     guessPokemon,
     guessResults,
