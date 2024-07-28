@@ -4,6 +4,7 @@ import PhaseGuess from "./PhaseGuess";
 import PhaseResults from "./PhaseResults";
 import DebugUI from "./DebugUI";
 import WaitingForRival from "../components/WaitingForRival";
+import Joining from "../components/Joining";
 
 const DEBUG = import.meta.env.MODE === "development";
 
@@ -17,12 +18,7 @@ export default function GameUI({
   return (
     <main className="card bg-base-100 shadow-xl border border-base-300 relative container mx-auto my-10 py-10 px-2 flex flex-col items-center gap-3">
       {DEBUG && <DebugUI gameRoom={gameRoom} />}
-      {!gameRoom.roomId && (
-        <div className="flex flex-col items-center">
-          <p className="text-lg font-semibold">Joining a game...</p>
-          <span className="loading loading-ring loading-lg text-accent" />
-        </div>
-      )}
+      {!gameRoom.roomId && <Joining />}
       {phase === "WAITING" && <WaitingForRival />}
       {phase === "PICK" && <PhasePick gameRoom={gameRoom} />}
       {phase === "GUESS" && <PhaseGuess gameRoom={gameRoom} />}
