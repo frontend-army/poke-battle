@@ -5,6 +5,7 @@ import PokemonBox from "../components/PokemonBox";
 import { getPokemonByNumber } from "../../../poke-battle-server/src/pokemons";
 import GuessResults from "../components/GuessResults";
 import GuessResultsCompact from "../components/GuessResultsCompact";
+import type { PokeBattleGuess } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 
 export default function GameUI({
   gameRoom,
@@ -22,9 +23,9 @@ export default function GameUI({
   } = gameRoom;
   const currentPlayer = state?.players.get(sessionId);
   const myPokemons = [...(currentPlayer?.pokemons.values() || [])];
-  const rivalPlayer = [...(state?.players.entries() || [])].find(
+  const [rivalId, rivalPlayer] = [...(state?.players.entries() || [])].find(
     ([id]) => id !== sessionId,
-  )?.[1];
+  ) || ["", undefined];
   const rivalPokemons = [...(rivalPlayer?.pokemons.values() || [])];
   const waitingForRivalAction =
     !!state?.rounds[state?.currentRound]?.actions.get(sessionId);
@@ -147,12 +148,18 @@ export default function GameUI({
               );
             })}
           </div>
-          {/* TODO: show opponent guesses */}
-          {/* <GuessResultsCompact
-            guessResults={guessResults.filter(
-              (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
-            )}
-          /> */}
+          <GuessResultsCompact
+            guessResults={[...state.rounds]
+              .map(
+                (round) =>
+                  JSON.parse(
+                    round.results.get(rivalId) || "{}",
+                  ) as PokeBattleGuess,
+              )
+              .filter(
+                (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
+              )}
+          />
         </>
       )}
       {state?.phase === "RESULTS" &&

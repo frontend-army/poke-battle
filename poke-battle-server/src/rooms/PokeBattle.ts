@@ -162,8 +162,7 @@ export class PokeBattle extends Room<PokeBattleState> {
                   .number
               );
               const guessPokemon = getPokemonByNumber(action.pokemon);
-
-              this.clients.getById(clientId).send("GUESS_RESULT", {
+              const result = {
                 result: {
                   stage: compareNumber(rivalPokemon.stage, guessPokemon.stage),
                   // TODO: adapt for multiple colors
@@ -199,7 +198,13 @@ export class PokeBattle extends Room<PokeBattleState> {
                   color: guessPokemon.colors.join(", "),
                 },
                 pokemonIndex: rivalPlayer.currentPokemon,
-              });
+              };
+              // TODO: use schema
+              this.state.rounds[this.state.currentRound].results.set(
+                clientId,
+                JSON.stringify(result)
+              );
+              this.clients.getById(clientId).send("GUESS_RESULT", result);
           }
         });
 

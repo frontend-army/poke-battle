@@ -74,11 +74,6 @@ export class Action extends Schema {
   @type("number") timestamp: number;
 }
 
-export class Result extends Schema {
-  @type("string") type: PokeBattleGuessActions["type"];
-  @type("number") pokemon: number;
-}
-
 export class Round extends Schema {
   @filterChildren(function (
     this: PokeBattleState,
@@ -89,7 +84,8 @@ export class Round extends Schema {
   })
   @type({ map: Action })
   actions = new MapSchema<Action>();
-  @type({ map: Action }) results = new MapSchema<Result>();
+  // TODO: use schema
+  @type({ map: "string" }) results = new MapSchema<string>();
 }
 
 export class PokeBattleState extends Schema {
