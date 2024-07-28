@@ -149,8 +149,11 @@ export class PokeBattle extends Room<PokeBattleState> {
                   this.clients
                     .getById(rivalSessionId)
                     .send("MATCH_RESULT", "DEFEAT");
-                  this.state.phase = PokeBattlePhase.RESULTS;
-                  this.state.winner = this.clients.getById(clientId).sessionId;
+                  if (!this.state.winner) {
+                    this.state.phase = PokeBattlePhase.RESULTS;
+                    this.state.winner =
+                      this.clients.getById(clientId).sessionId;
+                  }
                 }
                 return;
               }
