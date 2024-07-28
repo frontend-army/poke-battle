@@ -21,7 +21,7 @@ const iconByResult: Record<string, ReactElement | undefined> = {
       viewBox="0 0 24 24"
       strokeWidth={5}
       stroke="currentColor"
-      className="size-20 opacity-50 p-1"
+      className="size-20 opacity-40 p-1"
     >
       <path
         strokeLinecap="round"
@@ -37,7 +37,7 @@ const iconByResult: Record<string, ReactElement | undefined> = {
       viewBox="0 0 24 24"
       strokeWidth={5}
       stroke="currentColor"
-      className="size-20 opacity-50 p-1"
+      className="size-20 opacity-40 p-1"
     >
       <path
         strokeLinecap="round"
@@ -47,6 +47,18 @@ const iconByResult: Record<string, ReactElement | undefined> = {
     </svg>
   ),
 };
+
+function formatAttr(attr: string, value: string | number | string[]) {
+  if (attr === "weight") {
+    return `${(value as number) / 10}kg`;
+  }
+
+  if (attr === "height") {
+    return `${(value as number) / 10}m`;
+  }
+
+  return value;
+}
 
 export default function GuessResults({
   guessResults,
@@ -101,7 +113,10 @@ export default function GuessResults({
                         {iconByResult[guess.result[attr as GuessAttributes]]}
                       </div>
                       <p className="font-bold text-lg capitalize break-words">
-                        {guess.pokemon[attr as keyof PokemonData]}
+                        {formatAttr(
+                          attr,
+                          guess.pokemon[attr as keyof PokemonData],
+                        )}
                       </p>
                     </div>
                   </td>

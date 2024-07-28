@@ -8,8 +8,6 @@ import GuessResultsCompact from "../components/GuessResultsCompact";
 import type { PokeBattleGuess } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import WaitingForRival from "../components/WaitingForRival";
 
-const DEBUG = import.meta.env.MODE === "development";
-
 export default function PhaseGuess({
   gameRoom: {
     currentPlayer,
@@ -70,17 +68,16 @@ export default function PhaseGuess({
               Guess
             </button>
           )}
-          <GuessResults
-            guessResults={guessResults.filter(
-              (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
-            )}
-          />
-          {/* <button className="btn btn-primary">Pokedex</button>
-          <button className="btn btn-primary">Attack</button>
-          <button className="btn btn-primary">Switch</button> */}
         </>
       )}
-
+      <GuessResults
+        guessResults={guessResults
+          .filter((guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon)
+          .reverse()}
+      />
+      {/* <button className="btn btn-primary">Pokedex</button>
+          <button className="btn btn-primary">Attack</button>
+          <button className="btn btn-primary">Switch</button> */}
       <p>My Pokemons:</p>
       <div className="flex flex-row">
         {myPokemons.map((p, i) => {
@@ -102,9 +99,8 @@ export default function PhaseGuess({
             (round) =>
               JSON.parse(round.results.get(rivalId) || "{}") as PokeBattleGuess,
           )
-          .filter(
-            (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
-          )}
+          .filter((guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon)
+          .reverse()}
       />
     </>
   );
