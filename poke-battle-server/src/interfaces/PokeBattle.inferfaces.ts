@@ -1,4 +1,11 @@
-import { type, filter, Schema, MapSchema, ArraySchema } from "@colyseus/schema";
+import {
+  type,
+  filter,
+  filterChildren,
+  Schema,
+  MapSchema,
+  ArraySchema,
+} from "@colyseus/schema";
 import { PokemonData } from "../pokemons";
 import { Client } from "colyseus";
 
@@ -48,7 +55,7 @@ export class Pokemon extends Schema {
   ) {
     return (
       this.guessed ||
-      [...root.players.get(client.id).pokemons.values()].includes(this)
+      [...root.players.get(client.sessionId).pokemons.values()].includes(this)
     );
   })
   @type("number")
@@ -63,7 +70,8 @@ export class Player extends Schema {
 
 export class Action extends Schema {
   @type("string") type: PokeBattleGuessActions["type"];
-  @type("number") pokemon: number;
+  @type("number") pokemon?: number;
+  @type("number") timestamp: number;
 }
 
 export class Result extends Schema {
@@ -72,14 +80,24 @@ export class Result extends Schema {
 }
 
 export class Round extends Schema {
-  @type({ map: Action }) actions = new MapSchema<Action>();
+  @filterChildren(function (
+    this: PokeBattleState,
+    client: Client,
+    key: string
+  ) {
+    return key === client.sessionId;
+  })
+  @type({ map: Action })
+  actions = new MapSchema<Action>();
   @type({ map: Action }) results = new MapSchema<Result>();
 }
 
 export class PokeBattleState extends Schema {
   @type({ map: Player }) players = new MapSchema<Player>();
   @type("string") phase: PokeBattlePhase;
-  @type({ array: Round }) rounds: ArraySchema<Round>;
+  @type({ array: Round }) rounds = new ArraySchema<Round>();
+  @type("number") currentRound: number;
+
   @type("string") winner: string;
   @type("number") maxPokemons: number;
 }

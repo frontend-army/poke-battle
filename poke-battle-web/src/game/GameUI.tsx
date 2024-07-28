@@ -26,6 +26,8 @@ export default function GameUI({
     ([id]) => id !== sessionId,
   )?.[1];
   const rivalPokemons = [...(rivalPlayer?.pokemons.values() || [])];
+  const waitingForRivalAction =
+    !!state?.rounds[state?.currentRound]?.actions.get(sessionId);
 
   const [currentGuess, setCurrentGuess] = useState<number | undefined>();
 
@@ -38,7 +40,6 @@ export default function GameUI({
     pokes.forEach((p, i) => pickPokemon(i, p));
   }
 
-  // TODO: handle loading / waiting after actions
   return (
     <main className="card bg-base-100 shadow-xl border border-base-300 relative container mx-auto my-10 py-10 px-2 flex flex-col items-center gap-3">
       <div className="absolute left-2 top-2 opacity-60">
@@ -95,32 +96,42 @@ export default function GameUI({
               );
             })}
           </div>
-          <PokemonPicker
-            placeholder="Pick a pokemon to guess"
-            selectedNumber={currentGuess}
-            onSelect={setCurrentGuess}
-          />
-          {currentGuess && (
-            <button
-              onClick={() => {
-                if (currentGuess) {
-                  guessPokemon(currentGuess);
-                  setCurrentGuess(undefined);
-                }
-              }}
-              className="btn btn-primary"
-            >
-              Guess
-            </button>
-          )}
-          <GuessResults
-            guessResults={guessResults.filter(
-              (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
-            )}
-          />
-          {/* <button className="btn btn-primary">Pokedex</button>
+          {waitingForRivalAction ? (
+            <div className="flex flex-col items-center">
+              <p className="text-lg font-semibold">Waiting for rival</p>
+              <span className="loading loading-ring loading-lg text-accent" />
+            </div>
+          ) : (
+            <>
+              <PokemonPicker
+                placeholder="Pick a pokemon to guess"
+                selectedNumber={currentGuess}
+                onSelect={setCurrentGuess}
+              />
+              {currentGuess && (
+                <button
+                  onClick={() => {
+                    if (currentGuess) {
+                      guessPokemon(currentGuess);
+                      setCurrentGuess(undefined);
+                    }
+                  }}
+                  className="btn btn-primary"
+                >
+                  Guess
+                </button>
+              )}
+              <GuessResults
+                guessResults={guessResults.filter(
+                  (guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon,
+                )}
+              />
+              {/* <button className="btn btn-primary">Pokedex</button>
           <button className="btn btn-primary">Attack</button>
           <button className="btn btn-primary">Switch</button> */}
+            </>
+          )}
+
           <p>My Pokemons:</p>
           <div className="flex flex-row">
             {myPokemons.map((p, i) => {
