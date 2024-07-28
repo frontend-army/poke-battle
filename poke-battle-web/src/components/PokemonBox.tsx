@@ -1,4 +1,5 @@
 import type { POKEMONS } from "../../../poke-battle-server/src/pokemons";
+import pokeball from "../assets/pokeball.png";
 
 export default function PokemonBox({
   index,
@@ -30,7 +31,7 @@ export default function PokemonBox({
         <div className="w-[80px] h-[80px] flex items-center justify-center relative">
           <img
             className="absolute opacity-100 grayscale"
-            src="poke-battle/images/pokeball.png"
+            src={pokeball.src}
             alt="Unknown Pokemon"
             width="60"
             height="60"
