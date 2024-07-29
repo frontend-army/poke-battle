@@ -5,7 +5,10 @@ import PokemonBox from "../components/PokemonBox";
 import { getPokemonByNumber } from "../../../poke-battle-server/src/pokemons";
 import GuessResults from "../components/GuessResults";
 import GuessResultsCompact from "../components/GuessResultsCompact";
-import type { PokeBattleGuess } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
+import type {
+  PokeBattleGuess,
+  PokeBattleGuessActions,
+} from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import WaitingForRival from "../components/WaitingForRival";
 
 export default function PhaseGuess({
@@ -24,6 +27,9 @@ export default function PhaseGuess({
   gameRoom: ReturnType<typeof useGameRoom>;
 }) {
   const [currentGuess, setCurrentGuess] = useState<number | undefined>();
+  const [currentAction, setCurrentAction] = useState<
+    PokeBattleGuessActions["type"] | undefined
+  >();
 
   return (
     <>
@@ -50,34 +56,75 @@ export default function PhaseGuess({
         <WaitingForRival />
       ) : (
         <>
-          <PokemonPicker
-            placeholder="Pick a pokemon to guess"
-            selectedNumber={currentGuess}
-            onSelect={setCurrentGuess}
-          />
-          {currentGuess && (
+          {currentAction === "GUESS" && (
+            <>
+              <PokemonPicker
+                placeholder="Pick a pokemon to guess"
+                selectedNumber={currentGuess}
+                onSelect={setCurrentGuess}
+              />
+              {currentGuess && (
+                <button
+                  onClick={() => {
+                    if (currentGuess) {
+                      guessPokemon(currentGuess);
+                      setCurrentGuess(undefined);
+                      setCurrentAction(undefined);
+                    }
+                  }}
+                  className="btn btn-secondary"
+                >
+                  Guess
+                </button>
+              )}
+            </>
+          )}
+          {!currentAction ? (
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={() => setCurrentAction("GUESS")}
+                className="btn btn-secondary"
+              >
+                Guess (∞)
+              </button>
+              <button
+                disabled
+                onClick={() => setCurrentAction("POKEDEX")}
+                className="btn btn-success"
+              >
+                Pokedex (0/1)
+              </button>
+              <button
+                disabled
+                onClick={() => setCurrentAction("ATTACK")}
+                className="btn btn-accent"
+              >
+                Attack (0/3)
+              </button>
+              <button
+                disabled
+                onClick={() => setCurrentAction("SWITCH")}
+                className="btn btn-primary"
+              >
+                Switch (0/2)
+              </button>
+            </div>
+          ) : (
             <button
-              onClick={() => {
-                if (currentGuess) {
-                  guessPokemon(currentGuess);
-                  setCurrentGuess(undefined);
-                }
-              }}
+              onClick={() => setCurrentAction(undefined)}
               className="btn btn-primary"
             >
-              Guess
+              Return
             </button>
           )}
         </>
       )}
+
       <GuessResults
         guessResults={guessResults
           .filter((guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon)
           .reverse()}
       />
-      {/* <button className="btn btn-primary">Pokedex</button>
-          <button className="btn btn-primary">Attack</button>
-          <button className="btn btn-primary">Switch</button> */}
       <p>My Pokemons:</p>
       <div className="flex flex-row">
         {myPokemons.map((p, i) => {

@@ -65,6 +65,7 @@ export default function GuessResults({
 }: {
   guessResults: PokeBattleGuess[];
 }) {
+  if (!!!guessResults?.length) return null;
   return (
     <div className="overflow-x-auto max-w-full mx-2">
       <table className="table table-xs table-pin-rows">
