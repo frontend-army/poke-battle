@@ -15,7 +15,6 @@ export default function PokemonPicker({
   placeholder?: string;
 }) {
   const [search, setSearch] = useState<string>("");
-
   const results = useMemo(
     () =>
       search
