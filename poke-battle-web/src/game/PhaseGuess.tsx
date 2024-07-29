@@ -23,7 +23,9 @@ export default function PhaseGuess({
     guessResults,
     state,
   },
+  gameFinished
 }: {
+  gameFinished?: boolean;
   gameRoom: ReturnType<typeof useGameRoom>;
 }) {
   const [currentGuess, setCurrentGuess] = useState<number | undefined>();
@@ -31,27 +33,8 @@ export default function PhaseGuess({
     PokeBattleGuessActions["type"] | undefined
   >();
 
-  return (
-    <>
-      <p className="text-4xl">Score</p>
-      <p className="text-4xl">
-        {rivalPokemons.filter((p) => p.guessed).length} -{" "}
-        {myPokemons.filter((p) => p.guessed).length}
-      </p>
-      <p>Rival Pokemons:</p>
-      <div className="flex flex-row">
-        {rivalPokemons.map((p, i) => {
-          const pokemon = getPokemonByNumber(p.number);
-          return (
-            <PokemonBox
-              key={i}
-              active={i === rivalPlayer?.currentPokemon}
-              index={i}
-              pokemon={p.guessed ? pokemon : undefined}
-            />
-          );
-        })}
-      </div>
+  function renderActions() {
+    return <>
       {waitingForRivalAction ? (
         <WaitingForRival />
       ) : (
@@ -119,12 +102,37 @@ export default function PhaseGuess({
           )}
         </>
       )}
-
       <GuessResults
         guessResults={guessResults
           .filter((guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon)
           .reverse()}
       />
+    </>
+  }
+
+  return (
+    <>
+      <p className="text-4xl">Score</p>
+      <p className="text-4xl">
+        {rivalPokemons.filter((p) => p.guessed).length} -{" "}
+        {myPokemons.filter((p) => p.guessed).length}
+      </p>
+      <p>Rival Pokemons:</p>
+      <div className="flex flex-row">
+        {rivalPokemons.map((p, i) => {
+          const pokemon = getPokemonByNumber(p.number);
+          return (
+            <PokemonBox
+              key={i}
+              active={i === rivalPlayer?.currentPokemon}
+              index={i}
+              pokemon={p.number ? pokemon : undefined}
+              grayed={!p.guessed}
+            />
+          );
+        })}
+      </div>
+      {!gameFinished && renderActions()}
       <p>My Pokemons:</p>
       <div className="flex flex-row">
         {myPokemons.map((p, i) => {

@@ -20,6 +20,7 @@ export class PokeBattle extends Room<PokeBattleState> {
     const roomState = new PokeBattleState();
     roomState.phase = PokeBattlePhase.WAITING;
     roomState.maxPokemons = 3;
+    roomState.guessesToWin = 2;
 
     this.setPrivate(privateRoom);
     this.setState(roomState);
@@ -136,14 +137,18 @@ export class PokeBattle extends Room<PokeBattleState> {
                   )?.[0] || "-1",
                   10
                 );
-                if (rivalPlayer.currentPokemon === -1) {
-                  this.clients
-                    .getById(clientId)
-                    .send("MATCH_RESULT", "VICTORY");
-                  this.clients
-                    .getById(rivalSessionId)
-                    .send("MATCH_RESULT", "DEFEAT");
+                if ([...rivalPlayer.pokemons.values()].filter(
+                  (p) => p.guessed
+                ).length === this.state.guessesToWin) {
                   if (!this.state.winner) {
+                    rivalPlayer.pokemons.forEach(p => p.revealed = true);
+                    this.state.players.get(clientId).pokemons.forEach(p => p.revealed = true);
+                    this.clients
+                      .getById(clientId)
+                      .send("MATCH_RESULT", "VICTORY");
+                    this.clients
+                      .getById(rivalSessionId)
+                      .send("MATCH_RESULT", "DEFEAT");
                     this.state.phase = PokeBattlePhase.RESULTS;
                     this.state.winner =
                       this.clients.getById(clientId).sessionId;

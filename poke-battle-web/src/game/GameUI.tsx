@@ -41,7 +41,12 @@ export default function GameUI({
       {phase === "WAITING" && <WaitingForRival />}
       {phase === "PICK" && <PhasePick gameRoom={gameRoom} />}
       {phase === "GUESS" && <PhaseGuess gameRoom={gameRoom} />}
-      {phase === "RESULTS" && <PhaseResults gameRoom={gameRoom} />}
+      {phase === "RESULTS" &&
+        <>
+          <PhaseResults gameRoom={gameRoom} />
+          <PhaseGuess gameRoom={gameRoom} gameFinished />
+        </>
+      }
     </main>
   );
 }

@@ -46,6 +46,7 @@ export type PokeBattleActions = PokeBattleGuessActions | PokeBattlePickActions;
 
 export class Pokemon extends Schema {
   @type("boolean") guessed = false;
+  @type("boolean") revealed = false;
 
   @filter(function (
     this: Pokemon,
@@ -54,7 +55,7 @@ export class Pokemon extends Schema {
     root: PokeBattleState
   ) {
     return (
-      this.guessed ||
+      this.guessed || this.revealed ||
       [...root.players.get(client.sessionId).pokemons.values()].includes(this)
     );
   })
@@ -96,6 +97,7 @@ export class PokeBattleState extends Schema {
 
   @type("string") winner: string;
   @type("number") maxPokemons: number;
+  @type("number") guessesToWin: number;
 }
 
 export type PokeBattleStateType = typeof PokeBattleState;
