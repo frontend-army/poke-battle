@@ -12,6 +12,7 @@ const BASE_URL = import.meta.env.PUBLIC_API_URL;
 export type GameRoom = ReturnType<typeof useGameRoom>;
 
 export default function useGameRoom() {
+  const [rooms, setRooms] = useState<Colyseus.RoomAvailable<any>[]>([]);
   const [roomId, setRoomId] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [gameState, setGameState] = useState<PokeBattleState>();
@@ -24,42 +25,52 @@ export default function useGameRoom() {
 
   useEffect(() => {
     clientRef.current = new Colyseus.Client(BASE_URL);
+    clientRef.current.getAvailableRooms("poke_battle").then(setRooms);
+  }, []);
 
-    clientRef.current
-      .joinOrCreate("poke_battle")
-      .then((room) => {
-        roomRef.current = room;
-        setRoomId(room.id);
-        setSessionId(room.sessionId);
-        room.onStateChange((newState: any) => {
-          setGameState({ ...newState });
-        });
-        room.onMessage("ERROR", (message) => toast.error(message));
-        room.onMessage("MATCH_RESULT", (message) => {
-          if (message === "VICTORY") {
-            toast.success(message);
-          } else if (message === "DEFEAT") {
-            toast.error(message);
-          }
-        });
-        room.onMessage("GUESS_RESULT", (message) => {
-          if (message === "CORRECT") {
-            toast.success("Correct!");
-            return;
-          }
-          setGuessResults((prev) => [...prev, message]);
-        });
-        room.onError(() => {
-          toast.error(`couldn't join (room: ${room.sessionId})`);
-        });
-        room.onLeave((code) => {
-          toast.error(`left room left (room: ${room.sessionId})`);
-        });
-      })
-      .catch((e) => {
+  const handleRoom = (room: Colyseus.Room) => {
+    roomRef.current = room;
+    setRoomId(room.id);
+    setSessionId(room.sessionId);
+    room.onStateChange((newState: any) => {
+      setGameState({ ...newState });
+    });
+    room.onMessage("ERROR", (message) => toast.error(message));
+    room.onMessage("MATCH_RESULT", (message) => {
+      if (message === "VICTORY") {
+        toast.success(message);
+      } else if (message === "DEFEAT") {
+        toast.error(message);
+      }
+    });
+    room.onMessage("GUESS_RESULT", (message) => {
+      if (message === "CORRECT") {
+        toast.success("Correct!");
+        return;
+      }
+      setGuessResults((prev) => [...prev, message]);
+    });
+    room.onError(() => {
+      toast.error(`couldn't join (room: ${room.sessionId})`);
+    });
+    room.onLeave((code) => {
+      toast.error(`left room left (room: ${room.sessionId})`);
+    });
+  }
+
+  const createRoom = (privateRoom = false) => {
+    clientRef.current?.create("poke_battle", { privateRoom })
+      .then(handleRoom).catch((e) => {
         toast.error(`Couldn't join room`);
       });
-  }, []);
+  }
+
+  const joinRoom = (roomId: string) => {
+    clientRef.current?.join("poke_battle", { roomId })
+      .then(handleRoom).catch((e) => {
+        toast.error(`Couldn't create room`);
+      });
+  }
 
   const sendAction = (action: PokeBattleActions) => {
     roomRef.current?.send("action", action);
@@ -110,5 +121,8 @@ export default function useGameRoom() {
     confirmPokemons,
     guessPokemon,
     guessResults,
+    createRoom,
+    joinRoom,
+    rooms,
   };
 }

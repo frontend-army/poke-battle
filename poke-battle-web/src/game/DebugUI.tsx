@@ -14,7 +14,6 @@ export default function DebugUI({
       <input
         type="checkbox"
         className="toggle toggle-xs"
-        defaultChecked
         checked={visible}
         onChange={(e) => setVisible(e.target.checked)}
       />

@@ -16,11 +16,12 @@ import { compareNumber, comparePartial, compareStrict } from "../utils/compare";
 export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
 
-  onCreate() {
+  onCreate({ privateRoom }: { privateRoom: boolean }) {
     const roomState = new PokeBattleState();
     roomState.phase = PokeBattlePhase.WAITING;
     roomState.maxPokemons = 3;
 
+    this.setPrivate(privateRoom);
     this.setState(roomState);
     this.onMessage("action", (client, message) => {
       this.playerAction(client, message);
@@ -46,8 +47,7 @@ export class PokeBattle extends Room<PokeBattleState> {
         ) {
           client.send(
             "ERROR",
-            `You already have an ${
-              getPokemonByNumber(action.pokemon).name
+            `You already have an ${getPokemonByNumber(action.pokemon).name
             } in your team!`
           );
           return false;
