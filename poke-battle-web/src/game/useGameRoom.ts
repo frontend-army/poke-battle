@@ -62,14 +62,16 @@ export default function useGameRoom() {
   const createRoom = (privateRoom = false) => {
     clientRef.current?.create("poke_battle", { privateRoom })
       .then(handleRoom).catch((e) => {
-        toast.error(`Couldn't join room`);
+        toast.error(`Couldn't create room`);
       });
   }
 
   const joinRoom = (roomId: string) => {
-    clientRef.current?.join("poke_battle", { roomId })
-      .then(handleRoom).catch((e) => {
-        toast.error(`Couldn't create room`);
+    (roomId ? clientRef.current?.joinById(roomId) : clientRef.current?.join("poke_battle"))
+      ?.then(handleRoom).catch((e) => {
+        console.log(e);
+
+        toast.error(`Couldn't join room`);
       });
   }
 

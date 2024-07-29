@@ -15,7 +15,7 @@ export default function GameUI({
   gameRoom: ReturnType<typeof useGameRoom>;
 }) {
   const phase = gameRoom.state?.phase;
-  const [roomId, setRoomId] = useState("");
+  const [newRoomId, setNewRoomId] = useState("");
   const [privateRoom, setPrivateRoom] = useState(false);
 
   return (
@@ -28,8 +28,8 @@ export default function GameUI({
           <p>{room.roomId}</p>
           <button className="btn btn-primary" onClick={() => gameRoom.joinRoom(room.roomId)}>Join</button>
         </div>)}
-        <input className="input input-bordered" type="text" placeholder="Enter room id" value={roomId} onChange={(event) => setRoomId(event.target.value)} />
-        <button className="btn btn-primary" onClick={() => gameRoom.joinRoom(roomId)}>Join</button>
+        <input className="input input-bordered" type="text" placeholder="Enter room id" value={newRoomId} onChange={(event) => setNewRoomId(event.target.value)} />
+        <button className="btn btn-primary" onClick={() => gameRoom.joinRoom(newRoomId)}>Join</button>
         <div className="form-control">
           <label className="label cursor-pointer gap-4">
             <span className="label-text">Private</span>
@@ -38,7 +38,7 @@ export default function GameUI({
         </div>
         <button className="btn btn-primary" onClick={() => gameRoom.createRoom(privateRoom)} >Create</button>
       </>}
-      {phase === "WAITING" && <WaitingForRival />}
+      {phase === "WAITING" && <><p>Room ID: {gameRoom.roomId}</p><WaitingForRival /></>}
       {phase === "PICK" && <PhasePick gameRoom={gameRoom} />}
       {phase === "GUESS" && <PhaseGuess gameRoom={gameRoom} />}
       {phase === "RESULTS" &&
