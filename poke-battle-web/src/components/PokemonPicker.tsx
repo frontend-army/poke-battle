@@ -20,10 +20,10 @@ export default function PokemonPicker({
     () =>
       search
         ? POKEMONS.filter((pokemon) =>
-            pokemon.name
-              .toLocaleLowerCase()
-              .startsWith(search.toLocaleLowerCase()),
-          ).slice(0, 3)
+          pokemon.name
+            .toLocaleLowerCase()
+            .startsWith(search.toLocaleLowerCase()),
+        ).slice(0, 3)
         : [],
     [search],
   );
