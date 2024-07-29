@@ -36,6 +36,7 @@ export default function useGameRoom() {
       setGameState({ ...newState });
     });
     room.onMessage("ERROR", (message) => toast.error(message));
+    room.onMessage("WARNING", (message) => toast.warning(message));
     room.onMessage("MATCH_RESULT", (message) => {
       if (message === "VICTORY") {
         toast.success(message);
@@ -88,6 +89,12 @@ export default function useGameRoom() {
     sendAction({ type: "GUESS", pokemon });
   };
 
+
+  const switchPokemon = () => {
+    sendAction({ type: "SWITCH" });
+  };
+
+
   const currentPlayer = gameState?.players.get(sessionId);
   const myPokemons = [...(currentPlayer?.pokemons.values() || [])];
   const [rivalId, rivalPlayer] = [...(gameState?.players.entries() || [])].find(
@@ -99,7 +106,7 @@ export default function useGameRoom() {
 
   function pickRandomPokemons() {
     const pokes = [];
-    while (pokes.length < 3) {
+    while (gameState?.maxPokemons && pokes.length < gameState?.maxPokemons) {
       var r = Math.floor(Math.random() * 151) + 1;
       if (pokes.indexOf(r) === -1) pokes.push(r);
     }
@@ -120,6 +127,7 @@ export default function useGameRoom() {
     pickRandomPokemons,
     confirmPokemons,
     guessPokemon,
+    switchPokemon,
     guessResults,
     createRoom,
     joinRoom,

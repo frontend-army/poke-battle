@@ -20,6 +20,7 @@ export default function PhaseGuess({
     rivalPokemons,
     waitingForRivalAction,
     guessPokemon,
+    switchPokemon,
     guessResults,
     state,
   },
@@ -62,6 +63,15 @@ export default function PhaseGuess({
               )}
             </>
           )}
+          {currentAction === "SWITCH" && (<button
+            onClick={() => {
+              switchPokemon();
+              setCurrentAction(undefined);
+            }}
+            className="btn btn-success"
+          >
+            Confirm
+          </button>)}
           {!currentAction ? (
             <div className="grid grid-cols-2 gap-4">
               <button
@@ -85,11 +95,11 @@ export default function PhaseGuess({
                 Attack (0/3)
               </button>
               <button
-                disabled
                 onClick={() => setCurrentAction("SWITCH")}
                 className="btn btn-primary"
+                disabled={(currentPlayer?.switches ?? 0) >= (state?.switches ?? 0) || myPokemons.filter(p => !p.guessed).length <= 1}
               >
-                Switch (0/2)
+                {`Switch to next (${(state?.switches ?? 0) - (currentPlayer?.switches ?? 0)}/${state?.switches})`}
               </button>
             </div>
           ) : (
@@ -101,7 +111,8 @@ export default function PhaseGuess({
             </button>
           )}
         </>
-      )}
+      )
+      }
       <GuessResults
         guessResults={guessResults
           .filter((guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon)
@@ -154,7 +165,7 @@ export default function PhaseGuess({
             (round) =>
               JSON.parse(round.results.get(rivalId) || "{}") as PokeBattleGuess,
           )
-          .filter((guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon)
+          .filter((guess) => guess.pokemonIndex === currentPlayer?.currentPokemon)
           .reverse()}
       />
     </>

@@ -13,6 +13,13 @@ import {
 import { getPokemonByNumber } from "../pokemons";
 import { compareNumber, comparePartial, compareStrict } from "../utils/compare";
 
+const ACTIONS_PRIORITY: Record<PokeBattleGuessActions['type'], number> = {
+  ATTACK: 1,
+  GUESS: 2,
+  POKEDEX: 2,
+  SWITCH: 3,
+}
+
 export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
 
@@ -21,6 +28,7 @@ export class PokeBattle extends Room<PokeBattleState> {
     roomState.phase = PokeBattlePhase.WAITING;
     roomState.maxPokemons = 3;
     roomState.guessesToWin = 2;
+    roomState.switches = 1;
 
     this.setPrivate(privateRoom);
     this.setState(roomState);
@@ -98,6 +106,11 @@ export class PokeBattle extends Room<PokeBattleState> {
       return false;
     }
 
+    if (action.type === "SWITCH" && this.state.players.get(currentClient.sessionId).switches >= this.state.switches) {
+      currentClient.send("ERROR", "Invalid action");
+      return false;
+    }
+
     const playerAction = new Action();
     playerAction.timestamp = Date.now();
     playerAction.type = action.type;
@@ -116,7 +129,13 @@ export class PokeBattle extends Room<PokeBattleState> {
     ) {
       [...this.state.rounds[this.state.currentRound].actions.entries()]
         .sort(
-          ([, actionA], [, actionB]) => actionA.timestamp - actionB.timestamp
+          ([, actionA], [, actionB]) => {
+            if (ACTIONS_PRIORITY[actionA.type] !== ACTIONS_PRIORITY[actionB.type]) {
+              return ACTIONS_PRIORITY[actionA.type] - ACTIONS_PRIORITY[actionB.type];
+            }
+
+            return actionA.timestamp - actionB.timestamp;
+          }
         )
         .forEach(([clientId, action]) => {
           const [rivalSessionId, rivalPlayer] = [
@@ -127,6 +146,16 @@ export class PokeBattle extends Room<PokeBattleState> {
           );
 
           switch (action.type) {
+            case "SWITCH": {
+              const player = this.state.players.get(clientId);
+              player.currentPokemon = Math.min(player.currentPokemon + 1, this.state.maxPokemons - 1);
+              player.switches++;
+              this.clients
+                .getById(rivalSessionId)
+                .send("WARNING", "Your rival switched Pokemon!");
+              // TODO: If rival just guessed "cancel" switch and restore
+              return;
+            }
             case "GUESS":
               if (rivalCurrentPokemon.number === action.pokemon) {
                 this.clients.getById(clientId).send("GUESS_RESULT", "CORRECT");

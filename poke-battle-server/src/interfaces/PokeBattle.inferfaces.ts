@@ -38,8 +38,8 @@ export type PokeBattlePickActions =
 
 export type PokeBattleGuessActions =
   | { type: "GUESS"; pokemon: number } // Guess pokedle style
-  | { type: "SWITCH"; pokemon: number } // Switch to another pokemon (slow, 2 times per match)
-  | { type: "POKEDEX" } // Get Pokedex entry, (slow, 1 times per match)
+  | { type: "SWITCH" } // Switch to the next pokemon (slow, X times per match)
+  | { type: "POKEDEX" } // Get Pokedex entry, (slow, X times per match)
   | { type: "ATTACK" }; // Get weakness / strength by attacking with your current pokemon;
 
 export type PokeBattleActions = PokeBattleGuessActions | PokeBattlePickActions;
@@ -67,6 +67,7 @@ export class Player extends Schema {
   @type("boolean") confirmed = false;
   @type({ map: Pokemon }) pokemons = new MapSchema<Pokemon>();
   @type("number") currentPokemon = 0;
+  @type("number") switches = 0;
 }
 
 export class Action extends Schema {
@@ -98,6 +99,7 @@ export class PokeBattleState extends Schema {
   @type("string") winner: string;
   @type("number") maxPokemons: number;
   @type("number") guessesToWin: number;
+  @type("number") switches: number;
 }
 
 export type PokeBattleStateType = typeof PokeBattleState;
