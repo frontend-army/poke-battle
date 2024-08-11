@@ -27,7 +27,7 @@ export class PokeBattle extends Room<PokeBattleState> {
     const roomState = new PokeBattleState();
     roomState.phase = PokeBattlePhase.WAITING;
     roomState.maxPokemons = 3;
-    roomState.guessesToWin = 2;
+    roomState.guessesToWin = 3;
     roomState.switches = 1;
 
     this.setPrivate(privateRoom);
