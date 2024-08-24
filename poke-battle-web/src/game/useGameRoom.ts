@@ -12,8 +12,11 @@ const BASE_URL = import.meta.env.PUBLIC_API_URL;
 export type GameRoom = ReturnType<typeof useGameRoom>;
 
 export default function useGameRoom() {
-  const [rooms, setRooms] = useState<Colyseus.RoomAvailable<any>[]>([]);
+  const [rooms, setRooms] = useState<Colyseus.RoomAvailable<any>[] | null>(
+    null,
+  );
   const [roomId, setRoomId] = useState("");
+  const [loadingRoom, setLoadingRoom] = useState(false);
   const [sessionId, setSessionId] = useState("");
   const [gameState, setGameState] = useState<PokeBattleState>();
   const [guessResults, setGuessResults] = useState<PokeBattleGuess[]>(
@@ -57,23 +60,34 @@ export default function useGameRoom() {
     room.onLeave((code) => {
       toast.error(`left room left (room: ${room.sessionId})`);
     });
-  }
+  };
 
-  const createRoom = (privateRoom = false) => {
-    clientRef.current?.create("poke_battle", { privateRoom })
-      .then(handleRoom).catch((e) => {
+  const createRoom = async (privateRoom = false) => {
+    setLoadingRoom(true);
+    await clientRef.current
+      ?.create("poke_battle", { privateRoom })
+      .then(handleRoom)
+      .catch((e) => {
         toast.error(`Couldn't create room`);
       });
-  }
+    setLoadingRoom(false);
+  };
 
-  const joinRoom = (roomId: string) => {
-    (roomId ? clientRef.current?.joinById(roomId) : clientRef.current?.join("poke_battle"))
-      ?.then(handleRoom).catch((e) => {
+  const joinRoom = async (roomId: string) => {
+    setLoadingRoom(true);
+    await (
+      roomId
+        ? clientRef.current?.joinById(roomId)
+        : clientRef.current?.join("poke_battle")
+    )
+      ?.then(handleRoom)
+      .catch((e) => {
         console.log(e);
 
         toast.error(`Couldn't join room`);
       });
-  }
+    setLoadingRoom(false);
+  };
 
   const sendAction = (action: PokeBattleActions) => {
     roomRef.current?.send("action", action);
@@ -91,11 +105,9 @@ export default function useGameRoom() {
     sendAction({ type: "GUESS", pokemon });
   };
 
-
   const switchPokemon = () => {
     sendAction({ type: "SWITCH" });
   };
-
 
   const currentPlayer = gameState?.players.get(sessionId);
   const myPokemons = [...(currentPlayer?.pokemons.values() || [])];
@@ -123,6 +135,7 @@ export default function useGameRoom() {
     rivalPlayer,
     rivalPokemons,
     waitingForRivalAction,
+    loadingRoom,
     roomId,
     sessionId,
     pickPokemon,
