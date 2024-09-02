@@ -20,7 +20,7 @@ const ACTIONS_PRIORITY: Record<PokeBattleGuessActions['type'], number> = {
   SWITCH: 3,
 }
 
-const RECONNECT_TIMEOUT = process.env.NODE_ENV === "production" ? 120 : 10
+const RECONNECT_TIMEOUT = process.env.NODE_ENV === "production" ? 20 : 10
 
 export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
