@@ -28,11 +28,25 @@ export default function useGameRoom() {
 
   useEffect(() => {
     clientRef.current = new Colyseus.Client(BASE_URL);
-    clientRef.current.getAvailableRooms("poke_battle").then(setRooms);
+    clientRef.current.getAvailableRooms("poke_battle").then((rooms) => {
+      setRooms(rooms);
+      const reconnectionToken = localStorage.getItem('reconnectionToken')
+
+      if (reconnectionToken) {
+        clientRef.current?.reconnect(reconnectionToken).then(handleRoom).catch((e) => {
+          console.error(e);
+
+          toast.error("No se pudo conectar a la sala.");
+          localStorage.removeItem('reconnectionToken')
+        });
+      }
+    });
   }, []);
 
   const handleRoom = (room: Colyseus.Room) => {
     roomRef.current = room;
+    localStorage.setItem('reconnectionToken', room.reconnectionToken)
+
     setRoomId(room.id);
     setSessionId(room.sessionId);
     room.onStateChange((newState: any) => {
@@ -56,9 +70,6 @@ export default function useGameRoom() {
     });
     room.onError(() => {
       toast.error(`couldn't join (room: ${room.sessionId})`);
-    });
-    room.onLeave((code) => {
-      toast.error(`left room left (room: ${room.sessionId})`);
     });
   };
 
@@ -88,6 +99,17 @@ export default function useGameRoom() {
       });
     setLoadingRoom(false);
   };
+
+  const exitRoom = () => {
+    localStorage.removeItem('reconnectionToken');
+    roomRef.current?.leave(true).then((code) => {
+      console.log(code);
+      roomRef.current = undefined;
+      setRoomId("");
+      setGameState(undefined);
+      setSessionId("");
+    });
+  }
 
   const sendAction = (action: PokeBattleActions) => {
     roomRef.current?.send("action", action);
@@ -146,6 +168,7 @@ export default function useGameRoom() {
     guessResults,
     createRoom,
     joinRoom,
+    exitRoom,
     rooms,
   };
 }

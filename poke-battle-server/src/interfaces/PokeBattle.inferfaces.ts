@@ -68,6 +68,8 @@ export class Player extends Schema {
   @type({ map: Pokemon }) pokemons = new MapSchema<Pokemon>();
   @type("number") currentPokemon = 0;
   @type("number") switches = 0;
+  @type("boolean") connected = true;
+
 }
 
 export class Action extends Schema {

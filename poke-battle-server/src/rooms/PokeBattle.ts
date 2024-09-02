@@ -20,6 +20,8 @@ const ACTIONS_PRIORITY: Record<PokeBattleGuessActions['type'], number> = {
   SWITCH: 3,
 }
 
+const RECONNECT_TIMEOUT = process.env.NODE_ENV === "production" ? 120 : 10
+
 export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
 
@@ -264,12 +266,25 @@ export class PokeBattle extends Room<PokeBattleState> {
     }
   }
 
-  onLeave(client: Client) {
-    this.state.players.delete(client.sessionId);
-    let remainingPlayerIds = Array.from(this.state.players.keys());
-    this.state.phase = PokeBattlePhase.RESULTS;
-    if (remainingPlayerIds.length > 0) {
-      this.state.winner = remainingPlayerIds[0];
+
+
+  async onLeave(client: Client, consented: boolean) {
+    try {
+      this.state.players.get(client.sessionId).connected = false;
+      if (consented) {
+        throw new Error("consented leave");
+      }
+
+      await this.allowReconnection(client, RECONNECT_TIMEOUT);
+      this.state.players.get(client.sessionId).connected = true;
+    } catch (e) {
+      if (this.state.phase !== PokeBattlePhase.RESULTS) {
+        let remainingPlayerIds = Array.from(this.state.players.keys());
+        this.state.phase = PokeBattlePhase.RESULTS;
+        if (remainingPlayerIds.length > 0) {
+          this.state.winner = remainingPlayerIds[0];
+        }
+      }
     }
   }
 }
