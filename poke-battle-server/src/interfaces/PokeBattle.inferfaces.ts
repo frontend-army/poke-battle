@@ -66,8 +66,11 @@ export class Pokemon extends Schema {
 export class Player extends Schema {
   @type("boolean") confirmed = false;
   @type({ map: Pokemon }) pokemons = new MapSchema<Pokemon>();
+  @type({ array: "string" }) results = new ArraySchema<string>();
   @type("number") currentPokemon = 0;
   @type("number") switches = 0;
+  @type("boolean") connected = true;
+
 }
 
 export class Action extends Schema {
@@ -86,8 +89,6 @@ export class Round extends Schema {
   })
   @type({ map: Action })
   actions = new MapSchema<Action>();
-  // TODO: use schema
-  @type({ map: "string" }) results = new MapSchema<string>();
 }
 
 export class PokeBattleState extends Schema {

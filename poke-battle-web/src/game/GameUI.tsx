@@ -7,7 +7,7 @@ import WaitingForRival from "../components/WaitingForRival";
 import Loading from "../components/Loading";
 import { useState } from "react";
 
-const DEBUG = import.meta.env.MODE === "development";
+const DEBUG = true; // import.meta.env.MODE === "development";
 
 export default function GameUI({
   gameRoom,
@@ -99,6 +99,11 @@ export default function GameUI({
           )}
         </>
       )}
+      {phase !== "WAITING" && phase !== "RESULTS" && gameRoom.roomId && !gameRoom.rivalPlayer?.connected &&
+        <Loading
+          text="Waiting for rival to reconnect..."
+          delay={800}
+        />}
       {gameRoom.loadingRoom && (
         <Loading text="Joining room..." timeout={3000} />
       )}
@@ -116,6 +121,9 @@ export default function GameUI({
           <PhaseGuess gameRoom={gameRoom} gameFinished />
         </>
       )}
+      {phase && ["WAITING", "RESULTS", "PICK"].includes(phase) && <button onClick={gameRoom.exitRoom} className="btn btn-accent">
+        Exit Room
+      </button>}
     </main>
   );
 }

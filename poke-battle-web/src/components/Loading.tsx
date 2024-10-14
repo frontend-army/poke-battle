@@ -41,10 +41,10 @@ export default function Loading({
       <p className="text-lg font-semibold">{text}</p>
       {showWarning && (
         <>
-          <p className="text-lg font-semibold">
+          <p className="transition-all text-lg font-semibold">
             This may take a few more seconds
           </p>
-          <img src={redPc.src} alt="" width="80" />
+          <img className="transition-all" src={redPc.src} alt="" width="80" />
         </>
       )}
     </div>

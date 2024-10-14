@@ -19,20 +19,31 @@ export default function useGameRoom() {
   const [loadingRoom, setLoadingRoom] = useState(false);
   const [sessionId, setSessionId] = useState("");
   const [gameState, setGameState] = useState<PokeBattleState>();
-  const [guessResults, setGuessResults] = useState<PokeBattleGuess[]>(
-    [] as PokeBattleGuess[],
-  );
 
   const clientRef = useRef<Colyseus.Client>();
   const roomRef = useRef<Colyseus.Room>();
 
   useEffect(() => {
     clientRef.current = new Colyseus.Client(BASE_URL);
-    clientRef.current.getAvailableRooms("poke_battle").then(setRooms);
+    clientRef.current.getAvailableRooms("poke_battle").then((rooms) => {
+      setRooms(rooms);
+      const reconnectionToken = localStorage.getItem('reconnectionToken')
+
+      if (reconnectionToken) {
+        clientRef.current?.reconnect(reconnectionToken).then(handleRoom).catch((e) => {
+          console.error(e);
+
+          toast.error("No se pudo conectar a la sala.");
+          localStorage.removeItem('reconnectionToken')
+        });
+      }
+    });
   }, []);
 
   const handleRoom = (room: Colyseus.Room) => {
     roomRef.current = room;
+    localStorage.setItem('reconnectionToken', room.reconnectionToken)
+
     setRoomId(room.id);
     setSessionId(room.sessionId);
     room.onStateChange((newState: any) => {
@@ -47,18 +58,12 @@ export default function useGameRoom() {
         toast.error(message);
       }
     });
-    room.onMessage("GUESS_RESULT", (message) => {
-      if (message === "CORRECT") {
-        toast.success("Correct!");
-        return;
-      }
-      setGuessResults((prev) => [...prev, message]);
+    room.onMessage("CORRECT_GUESS", () => {
+      toast.success("Correct!");
+      return;
     });
     room.onError(() => {
       toast.error(`couldn't join (room: ${room.sessionId})`);
-    });
-    room.onLeave((code) => {
-      toast.error(`left room left (room: ${room.sessionId})`);
     });
   };
 
@@ -88,6 +93,16 @@ export default function useGameRoom() {
       });
     setLoadingRoom(false);
   };
+
+  const exitRoom = () => {
+    localStorage.removeItem('reconnectionToken');
+    roomRef.current?.leave(true).then((code) => {
+      roomRef.current = undefined;
+      setRoomId("");
+      setGameState(undefined);
+      setSessionId("");
+    });
+  }
 
   const sendAction = (action: PokeBattleActions) => {
     roomRef.current?.send("action", action);
@@ -143,9 +158,16 @@ export default function useGameRoom() {
     confirmPokemons,
     guessPokemon,
     switchPokemon,
-    guessResults,
+    guessResults: [...(currentPlayer?.results || [])]
+      .map(
+        (result) =>
+          JSON.parse(result || "{}") as PokeBattleGuess,
+      )
+      .filter((result) => result.pokemonIndex === rivalPlayer?.currentPokemon)
+      .reverse(),
     createRoom,
     joinRoom,
+    exitRoom,
     rooms,
   };
 }

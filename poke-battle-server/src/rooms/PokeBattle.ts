@@ -20,6 +20,8 @@ const ACTIONS_PRIORITY: Record<PokeBattleGuessActions['type'], number> = {
   SWITCH: 3,
 }
 
+const RECONNECT_TIMEOUT = process.env.NODE_ENV === "production" ? 20 : 10
+
 export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
 
@@ -158,7 +160,7 @@ export class PokeBattle extends Room<PokeBattleState> {
             }
             case "GUESS":
               if (rivalCurrentPokemon.number === action.pokemon) {
-                this.clients.getById(clientId).send("GUESS_RESULT", "CORRECT");
+                this.clients.getById(clientId).send("CORRECT_GUESS");
                 rivalCurrentPokemon.guessed = true;
                 rivalPlayer.currentPokemon = parseInt(
                   [...rivalPlayer.pokemons.entries()].find(
@@ -228,11 +230,9 @@ export class PokeBattle extends Room<PokeBattleState> {
                 pokemonIndex: rivalPlayer.currentPokemon,
               };
               // TODO: use schema
-              this.state.rounds[this.state.currentRound].results.set(
-                clientId,
+              this.state.players.get(clientId).results.push(
                 JSON.stringify(result)
               );
-              this.clients.getById(clientId).send("GUESS_RESULT", result);
           }
         });
 
@@ -264,12 +264,25 @@ export class PokeBattle extends Room<PokeBattleState> {
     }
   }
 
-  onLeave(client: Client) {
-    this.state.players.delete(client.sessionId);
-    let remainingPlayerIds = Array.from(this.state.players.keys());
-    this.state.phase = PokeBattlePhase.RESULTS;
-    if (remainingPlayerIds.length > 0) {
-      this.state.winner = remainingPlayerIds[0];
+
+
+  async onLeave(client: Client, consented: boolean) {
+    try {
+      this.state.players.get(client.sessionId).connected = false;
+      if (consented) {
+        throw new Error("consented leave");
+      }
+
+      await this.allowReconnection(client, RECONNECT_TIMEOUT);
+      this.state.players.get(client.sessionId).connected = true;
+    } catch (e) {
+      if (this.state.phase !== PokeBattlePhase.RESULTS) {
+        let remainingPlayerIds = Array.from(this.state.players.keys());
+        this.state.phase = PokeBattlePhase.RESULTS;
+        if (remainingPlayerIds.length > 0) {
+          this.state.winner = remainingPlayerIds[0];
+        }
+      }
     }
   }
 }
