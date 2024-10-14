@@ -19,9 +19,6 @@ export default function useGameRoom() {
   const [loadingRoom, setLoadingRoom] = useState(false);
   const [sessionId, setSessionId] = useState("");
   const [gameState, setGameState] = useState<PokeBattleState>();
-  const [guessResults, setGuessResults] = useState<PokeBattleGuess[]>(
-    [] as PokeBattleGuess[],
-  );
 
   const clientRef = useRef<Colyseus.Client>();
   const roomRef = useRef<Colyseus.Room>();
@@ -61,12 +58,9 @@ export default function useGameRoom() {
         toast.error(message);
       }
     });
-    room.onMessage("GUESS_RESULT", (message) => {
-      if (message === "CORRECT") {
-        toast.success("Correct!");
-        return;
-      }
-      setGuessResults((prev) => [...prev, message]);
+    room.onMessage("CORRECT_GUESS", () => {
+      toast.success("Correct!");
+      return;
     });
     room.onError(() => {
       toast.error(`couldn't join (room: ${room.sessionId})`);
@@ -165,7 +159,13 @@ export default function useGameRoom() {
     confirmPokemons,
     guessPokemon,
     switchPokemon,
-    guessResults,
+    guessResults: [...(currentPlayer?.results || [])]
+      .map(
+        (result) =>
+          JSON.parse(result || "{}") as PokeBattleGuess,
+      )
+      .filter((result) => result.pokemonIndex === rivalPlayer?.currentPokemon)
+      .reverse(),
     createRoom,
     joinRoom,
     exitRoom,

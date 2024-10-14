@@ -114,9 +114,7 @@ export default function PhaseGuess({
       )
       }
       <GuessResults
-        guessResults={guessResults
-          .filter((guess) => guess.pokemonIndex === rivalPlayer?.currentPokemon)
-          .reverse()}
+        guessResults={guessResults}
       />
     </>
   }
@@ -160,12 +158,12 @@ export default function PhaseGuess({
         })}
       </div>
       <GuessResultsCompact
-        guessResults={[...(state?.rounds || [])]
+        guessResults={[...(rivalPlayer?.results || [])]
           .map(
-            (round) =>
-              JSON.parse(round.results.get(rivalId) || "{}") as PokeBattleGuess,
+            (result) =>
+              JSON.parse(result || "{}") as PokeBattleGuess,
           )
-          .filter((guess) => guess.pokemonIndex === currentPlayer?.currentPokemon)
+          .filter((result) => result.pokemonIndex === currentPlayer?.currentPokemon)
           .reverse()}
       />
     </>

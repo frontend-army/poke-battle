@@ -160,7 +160,7 @@ export class PokeBattle extends Room<PokeBattleState> {
             }
             case "GUESS":
               if (rivalCurrentPokemon.number === action.pokemon) {
-                this.clients.getById(clientId).send("GUESS_RESULT", "CORRECT");
+                this.clients.getById(clientId).send("CORRECT_GUESS");
                 rivalCurrentPokemon.guessed = true;
                 rivalPlayer.currentPokemon = parseInt(
                   [...rivalPlayer.pokemons.entries()].find(
@@ -230,11 +230,9 @@ export class PokeBattle extends Room<PokeBattleState> {
                 pokemonIndex: rivalPlayer.currentPokemon,
               };
               // TODO: use schema
-              this.state.rounds[this.state.currentRound].results.set(
-                clientId,
+              this.state.players.get(clientId).results.push(
                 JSON.stringify(result)
               );
-              this.clients.getById(clientId).send("GUESS_RESULT", result);
           }
         });
 

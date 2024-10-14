@@ -7,7 +7,7 @@ import WaitingForRival from "../components/WaitingForRival";
 import Loading from "../components/Loading";
 import { useState } from "react";
 
-const DEBUG = import.meta.env.MODE === "development";
+const DEBUG = true; // import.meta.env.MODE === "development";
 
 export default function GameUI({
   gameRoom,
@@ -121,7 +121,7 @@ export default function GameUI({
           <PhaseGuess gameRoom={gameRoom} gameFinished />
         </>
       )}
-      {phase && ["WAITING", "RESULTS"].includes(phase) && <button onClick={gameRoom.exitRoom} className="btn btn-accent">
+      {phase && ["WAITING", "RESULTS", "PICK"].includes(phase) && <button onClick={gameRoom.exitRoom} className="btn btn-accent">
         Exit Room
       </button>}
     </main>

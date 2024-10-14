@@ -22,7 +22,7 @@ export default function PokemonPicker({
           pokemon.name
             .toLocaleLowerCase()
             .startsWith(search.toLocaleLowerCase()),
-        ).slice(0, 3)
+        ).slice(0, 6)
         : [],
     [search],
   );
