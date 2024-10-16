@@ -28,7 +28,7 @@ export type PokeBattleGuess = {
 export enum PokeBattlePhase {
   WAITING = "WAITING",
   PICK = "PICK",
-  GUESS = "GUESS",
+  MAIN = "MAIN",
   RESULTS = "RESULTS",
 }
 
@@ -55,7 +55,8 @@ export class Pokemon extends Schema {
     root: PokeBattleState
   ) {
     return (
-      this.guessed || this.revealed ||
+      this.guessed ||
+      this.revealed ||
       [...root.players.get(client.sessionId).pokemons.values()].includes(this)
     );
   })
@@ -70,7 +71,6 @@ export class Player extends Schema {
   @type("number") currentPokemon = 0;
   @type("number") switches = 0;
   @type("boolean") connected = true;
-
 }
 
 export class Action extends Schema {

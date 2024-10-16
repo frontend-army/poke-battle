@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as Colyseus from "colyseus.js";
 import type {
   PokeBattleState,
@@ -27,22 +27,29 @@ export default function useGameRoom() {
     clientRef.current = new Colyseus.Client(BASE_URL);
     clientRef.current.getAvailableRooms("poke_battle").then((rooms) => {
       setRooms(rooms);
-      const reconnectionToken = localStorage.getItem('reconnectionToken')
+      const reconnectionToken = localStorage.getItem("reconnectionToken");
 
       if (reconnectionToken) {
-        clientRef.current?.reconnect(reconnectionToken).then(handleRoom).catch((e) => {
-          console.error(e);
+        clientRef.current
+          ?.reconnect(reconnectionToken)
+          .then(handleRoom)
+          .catch((e) => {
+            console.error(e);
 
-          toast.error("No se pudo conectar a la sala.");
-          localStorage.removeItem('reconnectionToken')
-        });
+            toast.error("No se pudo conectar a la sala.");
+            localStorage.removeItem("reconnectionToken");
+          });
       }
     });
   }, []);
 
+  const refreshRooms = useCallback(() => {
+    clientRef.current?.getAvailableRooms("poke_battle").then(setRooms);
+  }, []);
+
   const handleRoom = (room: Colyseus.Room) => {
     roomRef.current = room;
-    localStorage.setItem('reconnectionToken', room.reconnectionToken)
+    localStorage.setItem("reconnectionToken", room.reconnectionToken);
 
     setRoomId(room.id);
     setSessionId(room.sessionId);
@@ -95,14 +102,14 @@ export default function useGameRoom() {
   };
 
   const exitRoom = () => {
-    localStorage.removeItem('reconnectionToken');
+    localStorage.removeItem("reconnectionToken");
     roomRef.current?.leave(true).then((code) => {
       roomRef.current = undefined;
       setRoomId("");
       setGameState(undefined);
       setSessionId("");
     });
-  }
+  };
 
   const sendAction = (action: PokeBattleActions) => {
     roomRef.current?.send("action", action);
@@ -159,15 +166,13 @@ export default function useGameRoom() {
     guessPokemon,
     switchPokemon,
     guessResults: [...(currentPlayer?.results || [])]
-      .map(
-        (result) =>
-          JSON.parse(result || "{}") as PokeBattleGuess,
-      )
+      .map((result) => JSON.parse(result || "{}") as PokeBattleGuess)
       .filter((result) => result.pokemonIndex === rivalPlayer?.currentPokemon)
       .reverse(),
     createRoom,
     joinRoom,
     exitRoom,
     rooms,
+    refreshRooms,
   };
 }

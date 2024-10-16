@@ -13,14 +13,14 @@ import {
 import { getPokemonByNumber } from "../pokemons";
 import { compareNumber, comparePartial, compareStrict } from "../utils/compare";
 
-const ACTIONS_PRIORITY: Record<PokeBattleGuessActions['type'], number> = {
+const ACTIONS_PRIORITY: Record<PokeBattleGuessActions["type"], number> = {
   ATTACK: 1,
   GUESS: 2,
   POKEDEX: 2,
   SWITCH: 3,
-}
+};
 
-const RECONNECT_TIMEOUT = process.env.NODE_ENV === "production" ? 20 : 10
+const RECONNECT_TIMEOUT = process.env.NODE_ENV === "production" ? 20 : 10;
 
 export class PokeBattle extends Room<PokeBattleState> {
   maxClients = 2;
@@ -58,7 +58,8 @@ export class PokeBattle extends Room<PokeBattleState> {
         ) {
           client.send(
             "ERROR",
-            `You already have an ${getPokemonByNumber(action.pokemon).name
+            `You already have an ${
+              getPokemonByNumber(action.pokemon).name
             } in your team!`
           );
           return false;
@@ -92,7 +93,7 @@ export class PokeBattle extends Room<PokeBattleState> {
         if (allConfirmed) {
           this.state.currentRound = 0;
           this.state.rounds.push(new Round());
-          this.state.phase = PokeBattlePhase.GUESS;
+          this.state.phase = PokeBattlePhase.MAIN;
         }
         return;
     }
@@ -108,7 +109,11 @@ export class PokeBattle extends Room<PokeBattleState> {
       return false;
     }
 
-    if (action.type === "SWITCH" && this.state.players.get(currentClient.sessionId).switches >= this.state.switches) {
+    if (
+      action.type === "SWITCH" &&
+      this.state.players.get(currentClient.sessionId).switches >=
+        this.state.switches
+    ) {
       currentClient.send("ERROR", "Invalid action");
       return false;
     }
@@ -130,15 +135,17 @@ export class PokeBattle extends Room<PokeBattleState> {
       this.maxClients
     ) {
       [...this.state.rounds[this.state.currentRound].actions.entries()]
-        .sort(
-          ([, actionA], [, actionB]) => {
-            if (ACTIONS_PRIORITY[actionA.type] !== ACTIONS_PRIORITY[actionB.type]) {
-              return ACTIONS_PRIORITY[actionA.type] - ACTIONS_PRIORITY[actionB.type];
-            }
-
-            return actionA.timestamp - actionB.timestamp;
+        .sort(([, actionA], [, actionB]) => {
+          if (
+            ACTIONS_PRIORITY[actionA.type] !== ACTIONS_PRIORITY[actionB.type]
+          ) {
+            return (
+              ACTIONS_PRIORITY[actionA.type] - ACTIONS_PRIORITY[actionB.type]
+            );
           }
-        )
+
+          return actionA.timestamp - actionB.timestamp;
+        })
         .forEach(([clientId, action]) => {
           const [rivalSessionId, rivalPlayer] = [
             ...this.state.players.entries(),
@@ -150,7 +157,10 @@ export class PokeBattle extends Room<PokeBattleState> {
           switch (action.type) {
             case "SWITCH": {
               const player = this.state.players.get(clientId);
-              player.currentPokemon = Math.min(player.currentPokemon + 1, this.state.maxPokemons - 1);
+              player.currentPokemon = Math.min(
+                player.currentPokemon + 1,
+                this.state.maxPokemons - 1
+              );
               player.switches++;
               this.clients
                 .getById(rivalSessionId)
@@ -168,12 +178,15 @@ export class PokeBattle extends Room<PokeBattleState> {
                   )?.[0] || "-1",
                   10
                 );
-                if ([...rivalPlayer.pokemons.values()].filter(
-                  (p) => p.guessed
-                ).length === this.state.guessesToWin) {
+                if (
+                  [...rivalPlayer.pokemons.values()].filter((p) => p.guessed)
+                    .length === this.state.guessesToWin
+                ) {
                   if (!this.state.winner) {
-                    rivalPlayer.pokemons.forEach(p => p.revealed = true);
-                    this.state.players.get(clientId).pokemons.forEach(p => p.revealed = true);
+                    rivalPlayer.pokemons.forEach((p) => (p.revealed = true));
+                    this.state.players
+                      .get(clientId)
+                      .pokemons.forEach((p) => (p.revealed = true));
                     this.clients
                       .getById(clientId)
                       .send("MATCH_RESULT", "VICTORY");
@@ -230,9 +243,9 @@ export class PokeBattle extends Room<PokeBattleState> {
                 pokemonIndex: rivalPlayer.currentPokemon,
               };
               // TODO: use schema
-              this.state.players.get(clientId).results.push(
-                JSON.stringify(result)
-              );
+              this.state.players
+                .get(clientId)
+                .results.push(JSON.stringify(result));
           }
         });
 
@@ -246,7 +259,7 @@ export class PokeBattle extends Room<PokeBattleState> {
       case PokeBattlePhase.PICK:
         this.handlePickAction(client, data as PokeBattlePickActions);
         return;
-      case PokeBattlePhase.GUESS:
+      case PokeBattlePhase.MAIN:
         this.handleGuessAction(client, data as PokeBattleGuessActions);
         return;
       default:
@@ -263,8 +276,6 @@ export class PokeBattle extends Room<PokeBattleState> {
       this.lock();
     }
   }
-
-
 
   async onLeave(client: Client, consented: boolean) {
     try {

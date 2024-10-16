@@ -21,7 +21,7 @@ const iconByResult: Record<string, ReactElement | undefined> = {
       viewBox="0 0 24 24"
       strokeWidth={5}
       stroke="currentColor"
-      className="size-20 opacity-40 p-1"
+      className="size-20 opacity-30 p-1"
     >
       <path
         strokeLinecap="round"
@@ -37,7 +37,7 @@ const iconByResult: Record<string, ReactElement | undefined> = {
       viewBox="0 0 24 24"
       strokeWidth={5}
       stroke="currentColor"
-      className="size-20 opacity-40 p-1"
+      className="size-20 opacity-30 p-1"
     >
       <path
         strokeLinecap="round"

@@ -1,20 +1,23 @@
+import Loading from "../components/Loading";
 import PokemonPicker from "../components/PokemonPicker";
 import WaitingForRival from "../components/WaitingForRival";
-import useGameRoom from "./useGameRoom";
+import type { GameRoom } from "../hooks/useGameRoom";
 
-export default function PhasePick({
-  gameRoom: {
+export default function PhasePick({ game }: { game: GameRoom }) {
+  const {
     currentPlayer,
     pickPokemon,
     pickRandomPokemons,
     confirmPokemons,
     state,
-  },
-}: {
-  gameRoom: ReturnType<typeof useGameRoom>;
-}) {
+    rivalPlayer,
+  } = game;
+
   return (
     <>
+      {!rivalPlayer?.connected && (
+        <Loading text="Waiting for rival to reconnect..." delay={800} />
+      )}
       <div className="flex flex-col">
         {[...Array(state?.maxPokemons).keys()].map((i) => (
           <PokemonPicker

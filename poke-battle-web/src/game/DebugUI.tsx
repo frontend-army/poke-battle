@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useGameRoom from "./useGameRoom";
+import useGameRoom from "../hooks/useGameRoom";
 
 export default function DebugUI({
   gameRoom,
