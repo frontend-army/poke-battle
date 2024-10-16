@@ -5,7 +5,6 @@ import PhaseResults from "./PhaseResults";
 import DebugUI from "./DebugUI";
 import Loading from "../components/Loading";
 import { type ReactNode } from "react";
-import { PokeBattlePhase } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import Rooms from "./Rooms";
 import PhaseWaiting from "./PhaseWaiting";
 import LeaveGameButton from "../components/LeaveGameButton";

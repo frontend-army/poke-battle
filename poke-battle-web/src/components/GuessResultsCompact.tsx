@@ -3,7 +3,6 @@ import type {
   GuessAttributes,
   PokeBattleGuess,
 } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
-import type { PokemonData } from "../../../poke-battle-server/src/pokemons";
 
 const classNameByResult: Record<string, string> = {
   CORRECT: "bg-success",

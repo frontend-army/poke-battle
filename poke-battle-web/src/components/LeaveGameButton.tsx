@@ -1,4 +1,3 @@
-import { PokeBattlePhase } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import type { GameRoom } from "../hooks/useGameRoom";
 
 export default function LeaveGameButton({ game }: { game: GameRoom }) {
