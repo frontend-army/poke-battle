@@ -1,13 +1,13 @@
 import { useState } from "react";
 import PokemonPicker from "../components/PokemonPicker";
-import useGameRoom, { type GameRoom } from "../hooks/useGameRoom";
+import { type GameRoom } from "../hooks/useGameRoom";
 import PokemonBox from "../components/PokemonBox";
 import { getPokemonByNumber } from "../../../poke-battle-server/src/pokemons";
 import GuessResults from "../components/GuessResults";
 import GuessResultsCompact from "../components/GuessResultsCompact";
 import type {
   PokeBattleGuess,
-  PokeBattleGuessActions,
+  PokeBattleMainActions,
 } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import WaitingForRival from "../components/WaitingForRival";
 import Loading from "../components/Loading";
@@ -32,7 +32,7 @@ export default function PhaseMain({
   } = game;
   const [currentGuess, setCurrentGuess] = useState<number | undefined>();
   const [currentAction, setCurrentAction] = useState<
-    PokeBattleGuessActions["type"] | undefined
+    PokeBattleMainActions["type"] | undefined
   >();
 
   function renderActions() {

@@ -103,7 +103,7 @@ export default function useGameRoom() {
 
   const exitRoom = () => {
     localStorage.removeItem("reconnectionToken");
-    roomRef.current?.leave(true).then((code) => {
+    roomRef.current?.leave(true).then(() => {
       roomRef.current = undefined;
       setRoomId("");
       setGameState(undefined);

@@ -1,11 +1,10 @@
-import useGameRoom, { type GameRoom } from "../hooks/useGameRoom";
+import { type GameRoom } from "../hooks/useGameRoom";
 import PhasePick from "./PhasePick";
 import PhaseMain from "./PhaseMain";
 import PhaseResults from "./PhaseResults";
 import DebugUI from "./DebugUI";
-import WaitingForRival from "../components/WaitingForRival";
 import Loading from "../components/Loading";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { PokeBattlePhase } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 import Rooms from "./Rooms";
 import PhaseWaiting from "./PhaseWaiting";

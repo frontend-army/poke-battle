@@ -82,44 +82,4 @@ export default function GuessResultsCompact({
         ))}
     </div>
   );
-
-  return (
-    <div className="flex flex-col">
-      {!!guessResults?.length &&
-        guessResults.map((guess, index) => (
-          <div
-            key={index}
-            className="flex flex-row flex-wrap p-2 gap-3 border-2 border-dashed border-accent"
-          >
-            <div className="tooltip" data-tip={guess.pokemon.name}>
-              <img
-                className="flex-1"
-                alt={guess.pokemon.name}
-                width={80}
-                src={guess.pokemon.sprite}
-              />
-            </div>
-            {Object.keys(guess.result).map((attr) => (
-              <div
-                className={
-                  "flex flex-col items-center justify-center w-[80px] p-1 border-4 relative rounded-md border-double border-neutral " +
-                  classNameByResult[guess.result[attr as GuessAttributes]]
-                }
-              >
-                {/* <p>
-                  {attr}: {guess.pokemon[attr as keyof PokemonData]}
-                </p> */}
-                {/* <p>{guess.result[attr as GuessAttributes]}</p> */}
-                <div className="absolute">
-                  {iconByResult[guess.result[attr as GuessAttributes]]}
-                </div>
-                <p className="font-bold text-lg capitalize break-words">
-                  {guess.pokemon[attr as keyof PokemonData]}
-                </p>
-              </div>
-            ))}
-          </div>
-        ))}
-    </div>
-  );
 }
