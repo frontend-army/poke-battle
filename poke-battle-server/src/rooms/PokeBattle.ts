@@ -3,7 +3,7 @@ import {
   Action,
   Player,
   PokeBattleActions,
-  PokeBattleGuessActions,
+  PokeBattleMainActions,
   PokeBattlePhase,
   PokeBattlePickActions,
   PokeBattleState,
@@ -13,7 +13,7 @@ import {
 import { getPokemonByNumber } from "../pokemons";
 import { compareNumber, comparePartial, compareStrict } from "../utils/compare";
 
-const ACTIONS_PRIORITY: Record<PokeBattleGuessActions["type"], number> = {
+const ACTIONS_PRIORITY: Record<PokeBattleMainActions["type"], number> = {
   ATTACK: 1,
   GUESS: 2,
   POKEDEX: 2,
@@ -99,7 +99,7 @@ export class PokeBattle extends Room<PokeBattleState> {
     }
   }
 
-  handleGuessAction(currentClient: Client, action: PokeBattleGuessActions) {
+  handleMainAction(currentClient: Client, action: PokeBattleMainActions) {
     if (
       this.state.rounds[this.state.currentRound].actions.get(
         currentClient.sessionId
@@ -260,7 +260,7 @@ export class PokeBattle extends Room<PokeBattleState> {
         this.handlePickAction(client, data as PokeBattlePickActions);
         return;
       case PokeBattlePhase.MAIN:
-        this.handleGuessAction(client, data as PokeBattleGuessActions);
+        this.handleMainAction(client, data as PokeBattleMainActions);
         return;
       default:
         return false;
