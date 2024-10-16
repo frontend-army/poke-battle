@@ -1,4 +1,4 @@
-import { PokeBattlePhase } from "../game/Game";
+import { PokeBattlePhase } from "../game/interfaces";
 import type { GameRoom } from "../hooks/useGameRoom";
 
 export default function LeaveGameButton({ game }: { game: GameRoom }) {
