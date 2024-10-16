@@ -8,6 +8,7 @@ import { type ReactNode } from "react";
 import Rooms from "./Rooms";
 import PhaseWaiting from "./PhaseWaiting";
 import LeaveGameButton from "../components/LeaveGameButton";
+import { PokeBattlePhase } from "./Game";
 
 const DEBUG = import.meta.env.MODE === "development";
 
