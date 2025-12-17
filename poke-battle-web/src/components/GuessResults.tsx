@@ -6,11 +6,11 @@ import type {
 import type { PokemonData } from "../../../poke-battle-server/src/pokemons";
 
 const classNameByResult: Record<string, string> = {
-  CORRECT: "bg-success",
-  PARTIAL: "bg-warning",
-  INCORRECT: "bg-error",
-  BIGGER: "bg-error",
-  SMALLER: "bg-error",
+  CORRECT: "bg-success-content",
+  PARTIAL: "bg-warning-content",
+  INCORRECT: "bg-error-content",
+  BIGGER: "bg-error-content",
+  SMALLER: "bg-error-content",
 };
 
 const iconByResult: Record<string, ReactElement | undefined> = {
@@ -113,7 +113,7 @@ export default function GuessResults({
                       <div className="absolute">
                         {iconByResult[guess.result[attr as GuessAttributes]]}
                       </div>
-                      <p className="font-bold text-lg capitalize break-words">
+                      <p className="font-bold text-lg capitalize break-words align-middle flex-grow-0">
                         {formatAttr(
                           attr,
                           guess.pokemon[attr as keyof PokemonData],

@@ -1,11 +1,14 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://frontend-army.github.io/poke-battle/",
   base: "/poke-battle",
-  integrations: [tailwind(), react()],
+  integrations: [react()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   output: "static"
 });

@@ -28,8 +28,21 @@ export default function useGameRoom() {
     clientRef.current.getAvailableRooms("poke_battle").then((rooms) => {
       setRooms(rooms);
       const reconnectionToken = localStorage.getItem("reconnectionToken");
+      const reconnectionTimestamp = localStorage.getItem("reconnectionTimestamp");
 
-      if (reconnectionToken) {
+      if (reconnectionToken && reconnectionTimestamp) {
+        const now = Date.now();
+        const savedTime = parseInt(reconnectionTimestamp, 10);
+        const oneHourInMs = 60 * 60 * 1000; // 1 hour
+
+        // If more than 1 hour have passed, silently remove tokens and don't reconnect
+        if (now - savedTime > oneHourInMs) {
+          localStorage.removeItem("reconnectionToken");
+          localStorage.removeItem("reconnectionTimestamp");
+          return;
+        }
+
+        // Otherwise, attempt to reconnect
         clientRef.current
           ?.reconnect(reconnectionToken)
           .then(handleRoom)
@@ -38,6 +51,7 @@ export default function useGameRoom() {
 
             toast.error("No se pudo conectar a la sala.");
             localStorage.removeItem("reconnectionToken");
+            localStorage.removeItem("reconnectionTimestamp");
           });
       }
     });
@@ -50,6 +64,7 @@ export default function useGameRoom() {
   const handleRoom = (room: Colyseus.Room) => {
     roomRef.current = room;
     localStorage.setItem("reconnectionToken", room.reconnectionToken);
+    localStorage.setItem("reconnectionTimestamp", Date.now().toString());
 
     setRoomId(room.id);
     setSessionId(room.sessionId);
@@ -103,6 +118,7 @@ export default function useGameRoom() {
 
   const exitRoom = () => {
     localStorage.removeItem("reconnectionToken");
+    localStorage.removeItem("reconnectionTimestamp");
     roomRef.current?.leave(true).then(() => {
       roomRef.current = undefined;
       setRoomId("");

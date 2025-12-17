@@ -129,12 +129,12 @@ export default function PhaseMain({
 
   return (
     <>
-      <p className="text-4xl">Score</p>
-      <p className="text-4xl">
+      <p className="text-5xl">Score</p>
+      <p className="text-5xl">
         {rivalPokemons.filter((p) => p.guessed).length} -{" "}
         {myPokemons.filter((p) => p.guessed).length}
       </p>
-      <p>Rival Pokemons:</p>
+      <p className="text-2xl">Rival Pokemons:</p>
       <div className="flex flex-row">
         {rivalPokemons.map((p, i) => {
           const pokemon = getPokemonByNumber(p.number);
@@ -150,7 +150,7 @@ export default function PhaseMain({
         })}
       </div>
       {!gameFinished && renderActions()}
-      <p>My Pokemons:</p>
+      <p className="text-2xl">My Pokemons:</p>
       <div className="flex flex-row">
         {myPokemons.map((p, i) => {
           const pokemon = getPokemonByNumber(p.number);

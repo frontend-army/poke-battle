@@ -5,11 +5,11 @@ import type {
 } from "../../../poke-battle-server/src/interfaces/PokeBattle.inferfaces";
 
 const classNameByResult: Record<string, string> = {
-  CORRECT: "bg-success",
-  PARTIAL: "bg-warning",
-  INCORRECT: "bg-error",
-  BIGGER: "bg-error",
-  SMALLER: "bg-error",
+  CORRECT: "bg-success-content",
+  PARTIAL: "bg-warning-content",
+  INCORRECT: "bg-error-content",
+  BIGGER: "bg-error-content",
+  SMALLER: "bg-error-content",
 };
 
 const iconByResult: Record<string, ReactElement | undefined> = {
@@ -20,7 +20,7 @@ const iconByResult: Record<string, ReactElement | undefined> = {
       viewBox="0 0 24 24"
       strokeWidth={5}
       stroke="currentColor"
-      className="size-7 opacity-75 p-1"
+      className="size-7 opacity-75 p-1 text-error"
     >
       <path
         strokeLinecap="round"
@@ -36,7 +36,7 @@ const iconByResult: Record<string, ReactElement | undefined> = {
       viewBox="0 0 24 24"
       strokeWidth={5}
       stroke="currentColor"
-      className="size-7 opacity-75 p-1"
+      className="size-7 opacity-75 p-1 text-error"
     >
       <path
         strokeLinecap="round"

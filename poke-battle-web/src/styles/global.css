@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  /* Set Pixelify Sans as the default font for all text */
+  --font-sans: "Pixelify Sans", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Define Press Start 2P as a custom font-title utility */
+  --font-title: "Press Start 2P", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Increase base font size for better readability */
+  --font-size-base: 1.125rem;
+}
+
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}

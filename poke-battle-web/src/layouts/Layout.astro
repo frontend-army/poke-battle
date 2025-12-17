@@ -1,5 +1,6 @@
 ---
 import ToastContainer from "../components/ToastContainer";
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -9,18 +10,21 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-theme="retro">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Pick your pokemons and guess your rival's!" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <title>{title}</title>
   </head>
   <body>
     <header class="container mx-auto py-5 items-center">
-      <h1 class="text-7xl font-medium text-center">Poke-Battle</h1>
+      <h1 class="text-6xl font-medium text-center font-title">Poke-Battle</h1>
     </header>
     <slot />
     <ToastContainer client:load />

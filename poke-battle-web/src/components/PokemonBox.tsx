@@ -36,7 +36,7 @@ export default function PokemonBox({
             width="60"
             height="60"
           />
-          <p className="text-accent font-extrabold text-5xl z-10">?</p>
+          <p className="text-accent text-center font-extrabold text-5xl z-10">?</p>
         </div>
       )}
     </div>
