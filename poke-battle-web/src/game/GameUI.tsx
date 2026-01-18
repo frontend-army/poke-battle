@@ -23,7 +23,7 @@ export default function GameUI({ game }: { game: GameRoom }) {
   const phase = game.state?.phase;
 
   return (
-    <main className="card card-border bg-base-200 ">
+    <main className="card card-border bg-base-200">
       <div className="card-body relative container mx-auto my-10 py-10 px-2 flex flex-col items-center gap-3">
         {DEBUG && <DebugUI gameRoom={game} />}
         {!game.roomId && !game.loadingRoom && <Rooms game={game} />}

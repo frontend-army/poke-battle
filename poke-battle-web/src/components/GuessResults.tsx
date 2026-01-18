@@ -48,7 +48,7 @@ const iconByResult: Record<string, ReactElement | undefined> = {
   ),
 };
 
-function formatAttr(attr: string, value: string | number | string[]) {
+function formatAttr(attr: string, value: string | number | string[]): string {
   if (attr === "weight") {
     return `${(value as number) / 10}kg`;
   }
@@ -57,7 +57,12 @@ function formatAttr(attr: string, value: string | number | string[]) {
     return `${(value as number) / 10}m`;
   }
 
-  return value;
+  return Array.isArray(value) ? value.join(" ") : value.toString();
+}
+
+function hasLongWord(text: string): boolean {
+  const words = text.split(/[\s,]+/);
+  return words.some((word) => word.length > 5);
 }
 
 export default function GuessResults({
@@ -113,11 +118,11 @@ export default function GuessResults({
                       <div className="absolute">
                         {iconByResult[guess.result[attr as GuessAttributes]]}
                       </div>
-                      <p className="font-bold text-lg capitalize break-words align-middle flex-grow-0">
+                      <p className={`font-bold ${hasLongWord(formatAttr(attr, guess.pokemon[attr as keyof PokemonData]).replace("-", " ")) ? "text-xs" : "text-lg"} capitalize wrap-anywhere hyphens-auto align-middle flex-grow-0`}>
                         {formatAttr(
                           attr,
                           guess.pokemon[attr as keyof PokemonData],
-                        )}
+                        ).replace("-", " ")}
                       </p>
                     </div>
                   </td>
