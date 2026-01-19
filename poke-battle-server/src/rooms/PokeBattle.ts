@@ -51,27 +51,29 @@ export class PokeBattle extends Room<PokeBattleState> {
           client.send("ERROR", "Invalid Pokemon");
           return false;
         }
+        const selectedPokemonNumber = currentPlayer.pickOptions.get(`${action.index + 1}-${action.pickIndex + 1}`);
+        console.log(action.index);
+
         if (
           [...currentPlayer.pokemons.values()].some(
-            (pokemon) => pokemon.number === action.pokemon
+            (pokemon, index) => pokemon.number === selectedPokemonNumber && index !== action.index
           )
         ) {
           client.send(
             "ERROR",
-            `You already have an ${
-              getPokemonByNumber(action.pokemon).name
+            `You already have an ${getPokemonByNumber(selectedPokemonNumber).name
             } in your team!`
           );
           return false;
         }
 
-        if (action.pokemon === -1) {
+        if (selectedPokemonNumber === -1) {
           currentPlayer.pokemons.delete(action.index.toString());
           return;
         }
 
         const newPokemon = new Pokemon();
-        newPokemon.number = action.pokemon;
+        newPokemon.number = selectedPokemonNumber;
         currentPlayer.pokemons.set(action.index.toString(), newPokemon);
         return;
       case "CONFIRM":
@@ -112,7 +114,7 @@ export class PokeBattle extends Room<PokeBattleState> {
     if (
       action.type === "SWITCH" &&
       this.state.players.get(currentClient.sessionId).switches >=
-        this.state.switches
+      this.state.switches
     ) {
       currentClient.send("ERROR", "Invalid action");
       return false;
@@ -273,6 +275,14 @@ export class PokeBattle extends Room<PokeBattleState> {
 
     if (this.state.players.size === this.maxClients) {
       this.state.phase = PokeBattlePhase.PICK;
+      this.state.players.forEach((player) => {
+        let pokemonOptions = [...Array(151).keys()];
+        [...Array(this.state.maxPokemons).keys()].forEach((i) => {
+          [...Array(3).keys()].forEach((j) => {
+            player.pickOptions.set(`${i + 1}-${j + 1}`, pokemonOptions.splice(Math.floor(Math.random() * pokemonOptions.length), 1)[0]);
+          });
+        });
+      });
       this.lock();
     }
   }

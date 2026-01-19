@@ -7,16 +7,16 @@ export default function PokemonBox({
   active,
   grayed,
 }: {
-  index: number;
+  index?: number;
   pokemon?: (typeof POKEMONS)[0];
-  active: boolean;
+  active?: boolean;
   grayed?: boolean;
 }) {
   return (
     <div
       className={`card flex join items-center flex-col w-28 aspect-square border-8 border-double ${active ? " border-accent" : "border-transparent"}`}
     >
-      <p className="font-bold text-xl">#{index + 1}</p>
+      {index !== undefined && <p className="font-bold text-xl">#{index + 1}</p>}
       {pokemon ? (
         <>
           <img

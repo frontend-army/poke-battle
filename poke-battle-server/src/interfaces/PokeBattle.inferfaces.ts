@@ -33,7 +33,7 @@ export enum PokeBattlePhase {
 }
 
 export type PokeBattlePickActions =
-  | { type: "PICK"; index: number; pokemon: number }
+  | { type: "PICK"; index: number; pickIndex: number }
   | { type: "CONFIRM" };
 
 export type PokeBattleMainActions =
@@ -66,6 +66,8 @@ export class Pokemon extends Schema {
 
 export class Player extends Schema {
   @type("boolean") confirmed = false;
+  // TODO: filter only to current player
+  @type({ map: "number" }) pickOptions = new MapSchema<number>();
   @type({ map: Pokemon }) pokemons = new MapSchema<Pokemon>();
   @type({ array: "string" }) results = new ArraySchema<string>();
   @type("number") currentPokemon = 0;

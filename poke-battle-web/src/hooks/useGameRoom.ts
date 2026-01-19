@@ -131,8 +131,8 @@ export default function useGameRoom() {
     roomRef.current?.send("action", action);
   };
 
-  const pickPokemon = (index: number, pokemon: number) => {
-    sendAction({ type: "PICK", index, pokemon });
+  const pickPokemon = (index: number, pickIndex: number) => {
+    sendAction({ type: "PICK", index, pickIndex });
   };
 
   const confirmPokemons = () => {
@@ -157,13 +157,14 @@ export default function useGameRoom() {
     !!gameState?.rounds[gameState?.currentRound]?.actions.get(sessionId);
 
   function pickRandomPokemons() {
-    const pokes = [];
-    while (gameState?.maxPokemons && pokes.length < gameState?.maxPokemons) {
-      var r = Math.floor(Math.random() * 151) + 1;
-      if (pokes.indexOf(r) === -1) pokes.push(r);
+    if (!gameState?.maxPokemons) return;
+    for (let i = 0; i < gameState.maxPokemons; i++) {
+      pickPokemon(i, Math.floor(Math.random() * 3));
     }
-    pokes.forEach((p, i) => pickPokemon(i, p));
   }
+
+
+
 
   return {
     state: gameState,

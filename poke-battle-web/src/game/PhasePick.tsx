@@ -1,4 +1,6 @@
+import { getPokemonByNumber } from "../../../poke-battle-server/src/pokemons";
 import Loading from "../components/Loading";
+import PokemonBox from "../components/PokemonBox";
 import PokemonPicker from "../components/PokemonPicker";
 import WaitingForRival from "../components/WaitingForRival";
 import type { GameRoom } from "../hooks/useGameRoom";
@@ -20,13 +22,19 @@ export default function PhasePick({ game }: { game: GameRoom }) {
       )}
       <div className="flex flex-col">
         {[...Array(state?.maxPokemons).keys()].map((i) => (
-          <PokemonPicker
-            key={i}
-            label={`Pokemon #${i + 1}`}
-            onSelect={(value) => pickPokemon(i, value)}
-            selectedNumber={currentPlayer?.pokemons.get(i.toString())?.number}
-            disabled={currentPlayer?.confirmed}
-          />
+          <div className="flex flex-col text-center">
+            <p className="font-bold text-xl">Pick Pokemon #{i + 1}</p>
+            <div className="flex">
+              {[...Array(3).keys()].map((j) => (
+                <button
+                  onClick={() => pickPokemon(i, j)}
+                >
+                  <PokemonBox
+                    active={currentPlayer?.pokemons.get(i.toString())?.number === getPokemonByNumber(currentPlayer?.pickOptions.get(`${i + 1}-${j + 1}`) || 0).number} pokemon={getPokemonByNumber(currentPlayer?.pickOptions.get(`${i + 1}-${j + 1}`) || 0)} />
+                </button>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
       {!currentPlayer?.confirmed ? (
