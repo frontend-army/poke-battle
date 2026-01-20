@@ -11,7 +11,7 @@ import {
   Round,
 } from "../interfaces/PokeBattle.inferfaces";
 import { getPokemonByNumber } from "../pokemons";
-import { compareNumber, comparePartial, compareStrict } from "../utils/compare";
+import { compareColors, compareNumber, comparePartial, compareStrict } from "../utils/compare";
 
 const ACTIONS_PRIORITY: Record<PokeBattleMainActions["type"], number> = {
   ATTACK: 1,
@@ -196,10 +196,9 @@ export class PokeBattle extends Room<PokeBattleState> {
               const result = {
                 result: {
                   stage: compareNumber(rivalPokemon.stage, guessPokemon.stage),
-                  // TODO: adapt for multiple colors
-                  color: compareStrict(
-                    rivalPokemon.colors[0],
-                    guessPokemon.colors[0]
+                  color: compareColors(
+                    rivalPokemon.colors,
+                    guessPokemon.colors
                   ),
                   habitat: compareStrict(
                     rivalPokemon.habitat,

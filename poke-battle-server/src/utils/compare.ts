@@ -24,3 +24,27 @@ export const comparePartial = (
 
   return "INCORRECT";
 };
+
+export const compareColors = (
+  targetColors: string[],
+  guessColors: string[]
+) => {
+  const targetSet = new Set(targetColors);
+  const guessSet = new Set(guessColors);
+
+  // Check if both sets have the same colors (exact match)
+  if (
+    targetSet.size === guessSet.size &&
+    [...targetSet].every((color) => guessSet.has(color))
+  ) {
+    return "CORRECT";
+  }
+
+  // Check if there's any overlap
+  const hasOverlap = [...targetSet].some((color) => guessSet.has(color));
+  if (hasOverlap) {
+    return "PARTIAL";
+  }
+
+  return "INCORRECT";
+};
