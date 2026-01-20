@@ -1964,7 +1964,7 @@ export const POKEMONS = [
   },
 ];
 
-export function getPokemonByNumber(number: number): PokemonData {
+export function getPokemonByNumber(number: number): PokemonData | undefined {
   return POKEMONS.find((p) => p.number === number);
 }
 

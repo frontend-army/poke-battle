@@ -64,6 +64,10 @@ export class Pokemon extends Schema {
   number: number;
 }
 
+export class PickOptionsRow extends Schema {
+  @type({ array: "number" }) options = new ArraySchema<number>();
+}
+
 export class Player extends Schema {
   @type("string") sessionId: string;
   @type("boolean") confirmed = false;
@@ -73,7 +77,7 @@ export class Player extends Schema {
   ) {
     return this.sessionId === client.sessionId;
   })
-  @type({ map: "number" }) pickOptions = new MapSchema<number>();
+  @type({ array: PickOptionsRow }) pickOptions = new ArraySchema<PickOptionsRow>();
   @type({ map: Pokemon }) pokemons = new MapSchema<Pokemon>();
   @type({ array: "string" }) results = new ArraySchema<string>();
   @type("number") currentPokemon = 0;
@@ -107,6 +111,7 @@ export class PokeBattleState extends Schema {
 
   @type("string") winner: string;
   @type("number") maxPokemons: number;
+  @type("number") maxPickOptions: number;
   @type("number") guessesToWin: number;
   @type("number") switches: number;
 }

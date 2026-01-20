@@ -9,6 +9,7 @@ import {
   PokeBattleState,
   Pokemon,
   Round,
+  PickOptionsRow,
 } from "../interfaces/PokeBattle.inferfaces";
 import { getPokemonByNumber } from "../pokemons";
 import { compareColors, compareNumber, comparePartial, compareStrict } from "../utils/compare";
@@ -29,7 +30,8 @@ export class PokeBattle extends Room<PokeBattleState> {
     const roomState = new PokeBattleState();
     roomState.phase = PokeBattlePhase.WAITING;
     roomState.maxPokemons = 3;
-    roomState.guessesToWin = 3;
+    roomState.maxPickOptions = 3;
+    roomState.guessesToWin = roomState.maxPokemons;
     roomState.switches = 1;
 
     this.setPrivate(privateRoom);
@@ -51,7 +53,7 @@ export class PokeBattle extends Room<PokeBattleState> {
           client.send("ERROR", "Invalid Pokemon");
           return false;
         }
-        const selectedPokemonNumber = currentPlayer.pickOptions.get(`${action.index + 1}-${action.pickIndex + 1}`);
+        const selectedPokemonNumber = currentPlayer.pickOptions[action.index]?.options[action.pickIndex];
 
         if (selectedPokemonNumber === -1) {
           currentPlayer.pokemons.delete(action.index.toString());
@@ -264,9 +266,11 @@ export class PokeBattle extends Room<PokeBattleState> {
       this.state.players.forEach((player) => {
         let pokemonOptions = [...Array(151).keys()];
         [...Array(this.state.maxPokemons).keys()].forEach((i) => {
-          [...Array(3).keys()].forEach((j) => {
-            player.pickOptions.set(`${i + 1}-${j + 1}`, pokemonOptions.splice(Math.floor(Math.random() * pokemonOptions.length), 1)[0]);
+          const optionsRow = new PickOptionsRow();
+          [...Array(this.state.maxPickOptions).keys()].forEach(() => {
+            optionsRow.options.push(pokemonOptions.splice(Math.floor(Math.random() * pokemonOptions.length), 1)[0]);
           });
+          player.pickOptions.push(optionsRow);
         });
       });
       this.lock();
