@@ -22,11 +22,12 @@ export default function PhasePick({ game }: { game: GameRoom }) {
       )}
       <div className="flex flex-col">
         {[...Array(state?.maxPokemons).keys()].map((i) => (
-          <div className="flex flex-col text-center">
+          <div key={i} className="flex flex-col text-center">
             <p className="font-bold text-xl">Pick Pokemon #{i + 1}</p>
             <div className="flex">
               {[...Array(3).keys()].map((j) => (
-                <button
+                <button key={j}
+                  className="cursor-pointer"
                   onClick={() => pickPokemon(i, j)}
                 >
                   <PokemonBox

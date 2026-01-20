@@ -52,20 +52,6 @@ export class PokeBattle extends Room<PokeBattleState> {
           return false;
         }
         const selectedPokemonNumber = currentPlayer.pickOptions.get(`${action.index + 1}-${action.pickIndex + 1}`);
-        console.log(action.index);
-
-        if (
-          [...currentPlayer.pokemons.values()].some(
-            (pokemon, index) => pokemon.number === selectedPokemonNumber && index !== action.index
-          )
-        ) {
-          client.send(
-            "ERROR",
-            `You already have an ${getPokemonByNumber(selectedPokemonNumber).name
-            } in your team!`
-          );
-          return false;
-        }
 
         if (selectedPokemonNumber === -1) {
           currentPlayer.pokemons.delete(action.index.toString());
@@ -271,6 +257,7 @@ export class PokeBattle extends Room<PokeBattleState> {
 
   onJoin(client: Client) {
     const player = new Player();
+    player.sessionId = client.sessionId;
     this.state.players.set(client.sessionId, player);
 
     if (this.state.players.size === this.maxClients) {

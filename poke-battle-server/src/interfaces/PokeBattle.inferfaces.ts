@@ -65,8 +65,14 @@ export class Pokemon extends Schema {
 }
 
 export class Player extends Schema {
+  @type("string") sessionId: string;
   @type("boolean") confirmed = false;
-  // TODO: filter only to current player
+  @filter(function (
+    this: Player,
+    client: Client,
+  ) {
+    return this.sessionId === client.sessionId;
+  })
   @type({ map: "number" }) pickOptions = new MapSchema<number>();
   @type({ map: Pokemon }) pokemons = new MapSchema<Pokemon>();
   @type({ array: "string" }) results = new ArraySchema<string>();
